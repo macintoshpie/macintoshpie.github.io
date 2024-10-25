@@ -3,10 +3,10 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Ted Summer</title>
-    <link rel="icon" href="/images/strawberry.svg" type="image/svg+xml"/>
+    <link rel="icon" href="/images/strawberry.svg" type="image/svg+xml" />
     <style>
         :root {
-            --accent-color: rgb(174, 255, 175);
+            --accent-color: #8ED081;
             --border-radius: 16px;
             --border-width: 2px;
             --radius: 2px;
@@ -14,7 +14,7 @@
 
         body {
             background-color: #fae7ff;
-            background-image: radial-gradient(#000000 1px, transparent 0);
+            background-image: radial-gradient(#000000 1.5px, transparent 0);
             background-size: 32px 32px;
             background-position: 0px 0px;
             background-attachment: fixed;
@@ -46,20 +46,21 @@
 
             max-width: 600px;
 
-            transition: transform 0.3s ease;
+            transition: transform 0.3s ease,
+                box-shadow 0.3s ease;
         }
 
         details:hover {
             transform: translateY(-3px);
-            box-shadow: -10px 10px 5px rgba(0, 0, 0, 0.1);
+            box-shadow: -7px 7px 7px rgba(0, 0, 0, 0.1) !important;
         }
 
         details[open] {
-            box-shadow: -10px 20px 10px rgba(0, 0, 0, 0.1);
+            box-shadow: -6px 6px 6px rgba(0, 0, 0, 0.1);
         }
 
         details:not([open]):hover {
-            animation: moveCounterClockwise 3s ease infinite;
+            animation: moveCounterClockwise 2.5s linear infinite;
         }
 
         details>summary {
@@ -74,8 +75,7 @@
 
         details[open]>summary {
             border: none;
-            /* box-shadow: -5px -5px 10px rgba(0, 0, 0, 0.5); */
-            
+
             cursor: nw-resize;
             background-color: var(--accent-color);
             position: sticky;
@@ -104,42 +104,47 @@
         }
 
 
-        /* TODO: add this class under "things I like > css" when you hover over css it freaks out */
         #sillyCss {
-            animation-name: ohno;
-            animation-duration: 1s;
-            animation-iteration-count: infinite;
+            animation: ohno 1s linear infinite;
         }
 
         @keyframes moveCounterClockwise {
             0% {
-              transform: translate(calc(var(--radius) * 1), calc(var(--radius) * 0));
+                transform: translate(calc(var(--radius) * 1), calc(var(--radius) * 0));
             }
+
             12.5% {
-              transform: translate(calc(var(--radius) * 0.707), calc(var(--radius) * -0.707)); /* top right diagonal */
+                transform: translate(calc(var(--radius) * 0.707), calc(var(--radius) * -0.707));
             }
+
             25% {
-              transform: translate(calc(var(--radius) * 0), calc(var(--radius) * -1));
+                transform: translate(calc(var(--radius) * 0), calc(var(--radius) * -1));
             }
+
             37.5% {
-              transform: translate(calc(var(--radius) * -0.707), calc(var(--radius) * -0.707)); /* top left diagonal */
+                transform: translate(calc(var(--radius) * -0.707), calc(var(--radius) * -0.707));
             }
+
             50% {
-              transform: translate(calc(var(--radius) * -1), calc(var(--radius) * 0));
+                transform: translate(calc(var(--radius) * -1), calc(var(--radius) * 0));
             }
+
             62.5% {
-              transform: translate(calc(var(--radius) * -0.707), calc(var(--radius) * 0.707)); /* bottom left diagonal */
+                transform: translate(calc(var(--radius) * -0.707), calc(var(--radius) * 0.707));
             }
+
             75% {
-              transform: translate(calc(var(--radius) * 0), calc(var(--radius) * 1));
+                transform: translate(calc(var(--radius) * 0), calc(var(--radius) * 1));
             }
+
             87.5% {
-              transform: translate(calc(var(--radius) * 0.707), calc(var(--radius) * 0.707)); /* bottom right diagonal */
+                transform: translate(calc(var(--radius) * 0.707), calc(var(--radius) * 0.707));
             }
+
             100% {
-              transform: translate(calc(var(--radius) * 1), calc(var(--radius) * 0));
+                transform: translate(calc(var(--radius) * 1), calc(var(--radius) * 0));
             }
-          }
+        }
 
         @keyframes ohno {
             0% {
@@ -286,13 +291,11 @@
                 cursor: zoom-out;
             }
         }
-
-
-
     </style>
 </head>
+
 <body>
-<details name="root">
+    <details name="root">
   <summary>Ted Summer</summary>
   <p>
     <details name="8d80ca801d4dbf4a5393c1b8a2038a0e3063ce610e2a928d20f71a2ea11d48e0">
