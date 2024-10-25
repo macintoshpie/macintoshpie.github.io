@@ -36,6 +36,10 @@ func main() {
 		dev.ServeDirectory("build")
 	}()
 
+	go func() {
+		dev.GeminiServeDirectory("build")
+	}()
+
 	<-done
 }
 

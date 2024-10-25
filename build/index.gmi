@@ -1,0 +1,15 @@
+# Hello world!
+=> https://tedsummer.com
+=> /subpage.gmi
+=> /images/me-circle.png
+* a list
+> a quote!
+* yep
+* | sub element
+* | | sub-sub element
+* | another element
+
+* yep
+* . sub element
+* . . sub-sub element
+* . another element
