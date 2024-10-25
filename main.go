@@ -65,7 +65,11 @@ func buildHTML(siteDataFile, siteTemplateFile string) {
 				{Name: xml.Name{Local: "name"}, Value: node.Parent.ID},
 			}
 			encodeStartTag(encoder, "details", attrs...)
-			encodeStartTag(encoder, "summary")
+			attrs = nil
+			if node.Content == "css" {
+				attrs = []xml.Attr{{Name: xml.Name{Local: "id"}, Value: "sillyCss"}}
+			}
+			encodeStartTag(encoder, "summary", attrs...)
 			encoder.EncodeToken(xml.CharData(node.Content))
 			encodeEndTag(encoder, "summary")
 			encodeStartTag(encoder, "p")

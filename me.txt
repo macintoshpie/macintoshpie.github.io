@@ -9,43 +9,54 @@
     - climbing
     - biking
       - I'm into 90s mountain bikes right now. I have a '93 raleigh m-40 currently
-        - => /images/my-raleigh.png
+      - => /images/my-raleigh.png
     - hyperlinks
       - => https://100r.co/
       - => http://www.musanim.com/all/
       - => https://mollysoda.exposed/
       - => http://www.beerxml.com/
+    - css
+      - just kidding i have no idea how to use it properly
 
 
 - sometimes I make things
   - this website (lists version)
     - This website is written as a single file as a big list
       - roughly follows syntax follows gemini gemfile format. will probably move further away from it as I go because its mine
-      - 
-  - tombola
-    - Generative music. Inspired by Teenage Engineering OP-1's tombola sequencer.
+  - tombola: generative music
+    - Inspired by Teenage Engineering OP-1's tombola sequencer.
+    - => https://tombola.tedsummer.com/
     - => /images/tombola.png
-  - liztz
+  - liztz: notes as lists
     - A lightweight note taking application centered around lists.
     - => /images/liztz.png
-  - tasks
+  - tasks: timeline estimation
     - A timeline estimator for multiple tasks. Uses Monte Carlo simulations to estimate when a collection of tasks will be complete. Mostly an exercise in creating fluid UI/UX.
     - => /images/tasks.png
+    - => https://en.wikipedia.org/wiki/Monte_Carlo_method#An_example
   - => https://actionsbyexample.com
     - GitHub Actions by Example is an introduction to GitHub’s Actions and Workflows through annotated example YAML files. I wrote a custom HTML generator in Golang to generate the documentation from YAML files.
     - => /images/actionsbyexample.png
-  - => https://mxtp.xyz
+  - mixtapexyz
     - A game where players build themed music playlists with friends. Had some fun writing a custom router in Golang.
+    - => https://www.mxtp.xyz/
     - => /images/mxtp.png
-  - => convoh.netlify.app
-    - A tool to have conversations with yourself.
+  - convoh
+    - chat with yourself
+    - => https://convoh.netlify.app
     - => /images/convoh.png
-  - => https://freedb.me
-    - Creating and maintaining databases for toy projects is a pain. freedb.me is a (fugly) free service for creating sqlite databases and querying them through HTTP requests. Written in go
+  - freedb.me
+    - free sqlite databases. queried through HTTP API. hand made with go
+    - https://freedb.me
     - => /images/freedb.png
-  - => https://jot.tedsummer.com
-    - Post-it note taking and reminders app.
+  - jot
+    - Post-it notes and scheduled reminders app.
+    - https://jot.tedsummer.com
     - => /images/jot.png
+  - paropt: tool optimization automation
+    - => https://github.com/macintoshpie/paropt
+    - => /images/paropt.png
+    - => https://ieeexplore.ieee.org/abstract/document/8968866
   - pixel synth
     - Pixel-based video synthesizer in HTML/JS
     - => /images/pixsynth.png

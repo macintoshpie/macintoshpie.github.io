@@ -6,6 +6,8 @@
         :root {
             --accent-color: rgb(174, 255, 175);
             --border-radius: 16px;
+            --border-width: 2px;
+            --radius: 2px;
         }
 
         body {
@@ -14,6 +16,11 @@
             background-size: 32px 32px;
             background-position: 0px 0px;
             background-attachment: fixed;
+
+            width: 100vw;
+            height: 100vh;
+
+            cursor: nwse-resize;
         }
 
         a {
@@ -33,28 +40,40 @@
 
             background: rgba(255, 255, 255, 0.557);
             border-radius: var(--border-radius);
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            box-shadow: -5px 5px 5px rgba(0, 0, 0, 0.1);
 
             max-width: 600px;
+
+            transition: transform 0.3s ease;
+        }
+
+        details:hover {
+            transform: translateY(-3px);
+            box-shadow: -10px 10px 5px rgba(0, 0, 0, 0.1);
         }
 
         details[open] {
-            box-shadow: 0 0 50px rgba(0, 0, 0, 1);
+            box-shadow: -10px 20px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        details:not([open]):hover {
+            animation: moveCounterClockwise 3s ease infinite;
         }
 
         details>summary {
-            border: 4px solid rgba(255, 255, 255, 0);
+            border: var(--border-width) solid rgba(255, 255, 255, 0);
             border-radius: var(--border-radius);
             padding: 8px;
         }
 
         details:not([open])>summary:hover {
-            border: 4px solid rgb(0, 0, 0);
+            border: var(--border-width) solid rgb(0, 0, 0);
         }
 
         details[open]>summary {
             border: none;
             /* box-shadow: -5px -5px 10px rgba(0, 0, 0, 0.5); */
+            
             cursor: nw-resize;
             background-color: var(--accent-color);
             position: sticky;
@@ -66,13 +85,14 @@
         }
 
         details:not([open])>summary:focus-within {
-            border: 4px solid var(--accent-color);
+            border: var(--border-width) solid var(--accent-color);
         }
 
         img {
             display: block;
             margin: auto;
             max-width: 400px;
+            border-radius: var(--border-radius);
         }
 
         iframe {
@@ -80,6 +100,193 @@
             margin: auto;
             max-width: 400px;
         }
+
+
+        /* TODO: add this class under "things I like > css" when you hover over css it freaks out */
+        #sillyCss {
+            animation-name: ohno;
+            animation-duration: 1s;
+            animation-iteration-count: infinite;
+        }
+
+        @keyframes moveCounterClockwise {
+            0% {
+              transform: translate(calc(var(--radius) * 1), calc(var(--radius) * 0));
+            }
+            12.5% {
+              transform: translate(calc(var(--radius) * 0.707), calc(var(--radius) * -0.707)); /* top right diagonal */
+            }
+            25% {
+              transform: translate(calc(var(--radius) * 0), calc(var(--radius) * -1));
+            }
+            37.5% {
+              transform: translate(calc(var(--radius) * -0.707), calc(var(--radius) * -0.707)); /* top left diagonal */
+            }
+            50% {
+              transform: translate(calc(var(--radius) * -1), calc(var(--radius) * 0));
+            }
+            62.5% {
+              transform: translate(calc(var(--radius) * -0.707), calc(var(--radius) * 0.707)); /* bottom left diagonal */
+            }
+            75% {
+              transform: translate(calc(var(--radius) * 0), calc(var(--radius) * 1));
+            }
+            87.5% {
+              transform: translate(calc(var(--radius) * 0.707), calc(var(--radius) * 0.707)); /* bottom right diagonal */
+            }
+            100% {
+              transform: translate(calc(var(--radius) * 1), calc(var(--radius) * 0));
+            }
+          }
+
+        @keyframes ohno {
+            0% {
+                cursor: alias;
+            }
+
+            3% {
+                cursor: all-scroll;
+            }
+
+            6% {
+                cursor: auto;
+            }
+
+            9% {
+                cursor: cell;
+            }
+
+            11% {
+                cursor: col-resize;
+            }
+
+            14% {
+                cursor: context-menu;
+            }
+
+            17% {
+                cursor: copy;
+            }
+
+            20% {
+                cursor: crosshair;
+            }
+
+            23% {
+                cursor: default;
+            }
+
+            26% {
+                cursor: e-resize;
+            }
+
+            29% {
+                cursor: ew-resize;
+            }
+
+            31% {
+                cursor: grab;
+            }
+
+            34% {
+                cursor: grabbing;
+            }
+
+            37% {
+                cursor: help;
+            }
+
+            40% {
+                cursor: move;
+            }
+
+            43% {
+                cursor: n-resize;
+            }
+
+            46% {
+                cursor: ne-resize;
+            }
+
+            49% {
+                cursor: nesw-resize;
+            }
+
+            51% {
+                cursor: ns-resize;
+            }
+
+            54% {
+                cursor: nw-resize;
+            }
+
+            57% {
+                cursor: nwse-resize;
+            }
+
+            60% {
+                cursor: no-drop;
+            }
+
+            63% {
+                cursor: none;
+            }
+
+            66% {
+                cursor: not-allowed;
+            }
+
+            69% {
+                cursor: pointer;
+            }
+
+            71% {
+                cursor: progress;
+            }
+
+            74% {
+                cursor: row-resize;
+            }
+
+            77% {
+                cursor: s-resize;
+            }
+
+            80% {
+                cursor: se-resize;
+            }
+
+            83% {
+                cursor: sw-resize;
+            }
+
+            86% {
+                cursor: text;
+            }
+
+            89% {
+                cursor: url(myBall.cur), auto;
+            }
+
+            91% {
+                cursor: w-resize;
+            }
+
+            94% {
+                cursor: wait;
+            }
+
+            97% {
+                cursor: zoom-in;
+            }
+
+            100% {
+                cursor: zoom-out;
+            }
+        }
+
+
+
     </style>
 </head>
 <body>
