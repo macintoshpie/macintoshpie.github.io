@@ -6,6 +6,8 @@
         :root {
             --accent-color: rgb(174, 255, 175);
             --border-radius: 16px;
+            --border-width: 2px;
+            --radius: 2px;
         }
 
         body {
@@ -14,6 +16,11 @@
             background-size: 32px 32px;
             background-position: 0px 0px;
             background-attachment: fixed;
+
+            width: 100vw;
+            height: 100vh;
+
+            cursor: nwse-resize;
         }
 
         a {
@@ -33,28 +40,40 @@
 
             background: rgba(255, 255, 255, 0.557);
             border-radius: var(--border-radius);
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            box-shadow: -5px 5px 5px rgba(0, 0, 0, 0.1);
 
             max-width: 600px;
+
+            transition: transform 0.3s ease;
+        }
+
+        details:hover {
+            transform: translateY(-3px);
+            box-shadow: -10px 10px 5px rgba(0, 0, 0, 0.1);
         }
 
         details[open] {
-            box-shadow: 0 0 50px rgba(0, 0, 0, 1);
+            box-shadow: -10px 20px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        details:not([open]):hover {
+            animation: moveCounterClockwise 3s ease infinite;
         }
 
         details>summary {
-            border: 4px solid rgba(255, 255, 255, 0);
+            border: var(--border-width) solid rgba(255, 255, 255, 0);
             border-radius: var(--border-radius);
             padding: 8px;
         }
 
         details:not([open])>summary:hover {
-            border: 4px solid rgb(0, 0, 0);
+            border: var(--border-width) solid rgb(0, 0, 0);
         }
 
         details[open]>summary {
             border: none;
             /* box-shadow: -5px -5px 10px rgba(0, 0, 0, 0.5); */
+            
             cursor: nw-resize;
             background-color: var(--accent-color);
             position: sticky;
@@ -66,13 +85,14 @@
         }
 
         details:not([open])>summary:focus-within {
-            border: 4px solid var(--accent-color);
+            border: var(--border-width) solid var(--accent-color);
         }
 
         img {
             display: block;
             margin: auto;
             max-width: 400px;
+            border-radius: var(--border-radius);
         }
 
         iframe {
@@ -80,6 +100,193 @@
             margin: auto;
             max-width: 400px;
         }
+
+
+        /* TODO: add this class under "things I like > css" when you hover over css it freaks out */
+        #sillyCss {
+            animation-name: ohno;
+            animation-duration: 1s;
+            animation-iteration-count: infinite;
+        }
+
+        @keyframes moveCounterClockwise {
+            0% {
+              transform: translate(calc(var(--radius) * 1), calc(var(--radius) * 0));
+            }
+            12.5% {
+              transform: translate(calc(var(--radius) * 0.707), calc(var(--radius) * -0.707)); /* top right diagonal */
+            }
+            25% {
+              transform: translate(calc(var(--radius) * 0), calc(var(--radius) * -1));
+            }
+            37.5% {
+              transform: translate(calc(var(--radius) * -0.707), calc(var(--radius) * -0.707)); /* top left diagonal */
+            }
+            50% {
+              transform: translate(calc(var(--radius) * -1), calc(var(--radius) * 0));
+            }
+            62.5% {
+              transform: translate(calc(var(--radius) * -0.707), calc(var(--radius) * 0.707)); /* bottom left diagonal */
+            }
+            75% {
+              transform: translate(calc(var(--radius) * 0), calc(var(--radius) * 1));
+            }
+            87.5% {
+              transform: translate(calc(var(--radius) * 0.707), calc(var(--radius) * 0.707)); /* bottom right diagonal */
+            }
+            100% {
+              transform: translate(calc(var(--radius) * 1), calc(var(--radius) * 0));
+            }
+          }
+
+        @keyframes ohno {
+            0% {
+                cursor: alias;
+            }
+
+            3% {
+                cursor: all-scroll;
+            }
+
+            6% {
+                cursor: auto;
+            }
+
+            9% {
+                cursor: cell;
+            }
+
+            11% {
+                cursor: col-resize;
+            }
+
+            14% {
+                cursor: context-menu;
+            }
+
+            17% {
+                cursor: copy;
+            }
+
+            20% {
+                cursor: crosshair;
+            }
+
+            23% {
+                cursor: default;
+            }
+
+            26% {
+                cursor: e-resize;
+            }
+
+            29% {
+                cursor: ew-resize;
+            }
+
+            31% {
+                cursor: grab;
+            }
+
+            34% {
+                cursor: grabbing;
+            }
+
+            37% {
+                cursor: help;
+            }
+
+            40% {
+                cursor: move;
+            }
+
+            43% {
+                cursor: n-resize;
+            }
+
+            46% {
+                cursor: ne-resize;
+            }
+
+            49% {
+                cursor: nesw-resize;
+            }
+
+            51% {
+                cursor: ns-resize;
+            }
+
+            54% {
+                cursor: nw-resize;
+            }
+
+            57% {
+                cursor: nwse-resize;
+            }
+
+            60% {
+                cursor: no-drop;
+            }
+
+            63% {
+                cursor: none;
+            }
+
+            66% {
+                cursor: not-allowed;
+            }
+
+            69% {
+                cursor: pointer;
+            }
+
+            71% {
+                cursor: progress;
+            }
+
+            74% {
+                cursor: row-resize;
+            }
+
+            77% {
+                cursor: s-resize;
+            }
+
+            80% {
+                cursor: se-resize;
+            }
+
+            83% {
+                cursor: sw-resize;
+            }
+
+            86% {
+                cursor: text;
+            }
+
+            89% {
+                cursor: url(myBall.cur), auto;
+            }
+
+            91% {
+                cursor: w-resize;
+            }
+
+            94% {
+                cursor: wait;
+            }
+
+            97% {
+                cursor: zoom-in;
+            }
+
+            100% {
+                cursor: zoom-out;
+            }
+        }
+
+
+
     </style>
 </head>
 <body>
@@ -132,13 +339,12 @@
           <p>
             <details name="628e6a76cce9d544a5d4c9e93beb067c0864fab1daa4dacf2eeff9bab723a0b5">
               <summary>I&#39;m into 90s mountain bikes right now. I have a &#39;93 raleigh m-40 currently</summary>
+              <p></p>
+            </details>
+            <details name="628e6a76cce9d544a5d4c9e93beb067c0864fab1daa4dacf2eeff9bab723a0b5">
+              <summary>/images/my-raleigh.png</summary>
               <p>
-                <details name="d1619d1dfbec3276c4177a6473261913af9e08aa8d3a45d9c6e6657b97574fc3">
-                  <summary>/images/my-raleigh.png</summary>
-                  <p>
-                    <img src="/images/my-raleigh.png" alt="/images/my-raleigh.png" loading="lazy"></img>
-                  </p>
-                </details>
+                <img src="/images/my-raleigh.png" alt="/images/my-raleigh.png" loading="lazy"></img>
               </p>
             </details>
           </p>
@@ -172,6 +378,15 @@
             </details>
           </p>
         </details>
+        <details name="3f642182352faaa7827fe1b925a4fc08015a177b4ed40b4f09ffc48ce406b646">
+          <summary id="sillyCss">css</summary>
+          <p>
+            <details name="36e64f19f57a05c8cd5b6bf7eff72703b4bbab19def7832eb4e686e7fa482eef">
+              <summary>just kidding i have no idea how to use it properly</summary>
+              <p></p>
+            </details>
+          </p>
+        </details>
       </p>
     </details>
   </p>
@@ -189,22 +404,24 @@
               <summary>roughly follows syntax follows gemini gemfile format. will probably move further away from it as I go because its mine</summary>
               <p></p>
             </details>
-            <details name="7d7bdf6626f086255c1e25085746ece779c0b5aa0e2c8f39b1e4395e048e7149">
-              <summary></summary>
-              <p></p>
-            </details>
           </p>
         </details>
       </p>
     </details>
     <details name="cb499ab78af5dcbedbce4dba799ef5eff29d31175a9c374556d871325182201b">
-      <summary>tombola</summary>
+      <summary>tombola: generative music</summary>
       <p>
-        <details name="318722ce2e90f9f851c776874ff91fef871a077b7d743eccf11fc117831b78da">
-          <summary>Generative music. Inspired by Teenage Engineering OP-1&#39;s tombola sequencer.</summary>
+        <details name="62dcbc88fc9cbf684787360b20622e3eed1f72867976062668a6a8eb31102716">
+          <summary>Inspired by Teenage Engineering OP-1&#39;s tombola sequencer.</summary>
           <p></p>
         </details>
-        <details name="318722ce2e90f9f851c776874ff91fef871a077b7d743eccf11fc117831b78da">
+        <details name="62dcbc88fc9cbf684787360b20622e3eed1f72867976062668a6a8eb31102716">
+          <summary>https://tombola.tedsummer.com/</summary>
+          <p>
+            <a href="https://tombola.tedsummer.com/">https://tombola.tedsummer.com/</a>
+          </p>
+        </details>
+        <details name="62dcbc88fc9cbf684787360b20622e3eed1f72867976062668a6a8eb31102716">
           <summary>/images/tombola.png</summary>
           <p>
             <img src="/images/tombola.png" alt="/images/tombola.png" loading="lazy"></img>
@@ -213,13 +430,13 @@
       </p>
     </details>
     <details name="cb499ab78af5dcbedbce4dba799ef5eff29d31175a9c374556d871325182201b">
-      <summary>liztz</summary>
+      <summary>liztz: notes as lists</summary>
       <p>
-        <details name="811672093803e07055ead73fa45b7fba0f11768aa545b47612184656c44aafe8">
+        <details name="b3ead7219e23462394481bea8dd7ff177bad3190be0e2c1541d171cd8cc1147c">
           <summary>A lightweight note taking application centered around lists.</summary>
           <p></p>
         </details>
-        <details name="811672093803e07055ead73fa45b7fba0f11768aa545b47612184656c44aafe8">
+        <details name="b3ead7219e23462394481bea8dd7ff177bad3190be0e2c1541d171cd8cc1147c">
           <summary>/images/liztz.png</summary>
           <p>
             <img src="/images/liztz.png" alt="/images/liztz.png" loading="lazy"></img>
@@ -228,16 +445,22 @@
       </p>
     </details>
     <details name="cb499ab78af5dcbedbce4dba799ef5eff29d31175a9c374556d871325182201b">
-      <summary>tasks</summary>
+      <summary>tasks: timeline estimation</summary>
       <p>
-        <details name="085154084c7427596104bc42f51f59f6d3ffd3d5f49f098210c20449fb7b2c71">
+        <details name="e3f5a36b42ff33becd2221b4bb16373891ac9dc69d1bf16e6d46e36699c68645">
           <summary>A timeline estimator for multiple tasks. Uses Monte Carlo simulations to estimate when a collection of tasks will be complete. Mostly an exercise in creating fluid UI/UX.</summary>
           <p></p>
         </details>
-        <details name="085154084c7427596104bc42f51f59f6d3ffd3d5f49f098210c20449fb7b2c71">
+        <details name="e3f5a36b42ff33becd2221b4bb16373891ac9dc69d1bf16e6d46e36699c68645">
           <summary>/images/tasks.png</summary>
           <p>
             <img src="/images/tasks.png" alt="/images/tasks.png" loading="lazy"></img>
+          </p>
+        </details>
+        <details name="e3f5a36b42ff33becd2221b4bb16373891ac9dc69d1bf16e6d46e36699c68645">
+          <summary>https://en.wikipedia.org/wiki/Monte_Carlo_method#An_example</summary>
+          <p>
+            <a href="https://en.wikipedia.org/wiki/Monte_Carlo_method#An_example">https://en.wikipedia.org/wiki/Monte_Carlo_method#An_example</a>
           </p>
         </details>
       </p>
@@ -259,14 +482,19 @@
       </p>
     </details>
     <details name="cb499ab78af5dcbedbce4dba799ef5eff29d31175a9c374556d871325182201b">
-      <summary>https://mxtp.xyz</summary>
+      <summary>mixtapexyz</summary>
       <p>
-        <a href="https://mxtp.xyz">https://mxtp.xyz</a>
-        <details name="02aa0a4fa9a90bb213e86c94c3d3f88920947619a3dd82b323dd5c8e76b24b9a">
+        <details name="bbf02b386d6549cf46ae610b19699cf3b694a9ebbe82e5f09e166fad95cbbc47">
           <summary>A game where players build themed music playlists with friends. Had some fun writing a custom router in Golang.</summary>
           <p></p>
         </details>
-        <details name="02aa0a4fa9a90bb213e86c94c3d3f88920947619a3dd82b323dd5c8e76b24b9a">
+        <details name="bbf02b386d6549cf46ae610b19699cf3b694a9ebbe82e5f09e166fad95cbbc47">
+          <summary>https://www.mxtp.xyz/</summary>
+          <p>
+            <a href="https://www.mxtp.xyz/">https://www.mxtp.xyz/</a>
+          </p>
+        </details>
+        <details name="bbf02b386d6549cf46ae610b19699cf3b694a9ebbe82e5f09e166fad95cbbc47">
           <summary>/images/mxtp.png</summary>
           <p>
             <img src="/images/mxtp.png" alt="/images/mxtp.png" loading="lazy"></img>
@@ -275,14 +503,19 @@
       </p>
     </details>
     <details name="cb499ab78af5dcbedbce4dba799ef5eff29d31175a9c374556d871325182201b">
-      <summary>convoh.netlify.app</summary>
+      <summary>convoh</summary>
       <p>
-        <a href="convoh.netlify.app">convoh.netlify.app</a>
-        <details name="c18826b599be0b706c9d6965869cb47feb3f03cc1326bb73b10ae8e2eb98d1da">
-          <summary>A tool to have conversations with yourself.</summary>
+        <details name="c7fb1f40617eff7d5ae2f31b5538707b717365dcbdf9990b20ef1d93481aaa44">
+          <summary>chat with yourself</summary>
           <p></p>
         </details>
-        <details name="c18826b599be0b706c9d6965869cb47feb3f03cc1326bb73b10ae8e2eb98d1da">
+        <details name="c7fb1f40617eff7d5ae2f31b5538707b717365dcbdf9990b20ef1d93481aaa44">
+          <summary>https://convoh.netlify.app</summary>
+          <p>
+            <a href="https://convoh.netlify.app">https://convoh.netlify.app</a>
+          </p>
+        </details>
+        <details name="c7fb1f40617eff7d5ae2f31b5538707b717365dcbdf9990b20ef1d93481aaa44">
           <summary>/images/convoh.png</summary>
           <p>
             <img src="/images/convoh.png" alt="/images/convoh.png" loading="lazy"></img>
@@ -291,14 +524,17 @@
       </p>
     </details>
     <details name="cb499ab78af5dcbedbce4dba799ef5eff29d31175a9c374556d871325182201b">
-      <summary>https://freedb.me</summary>
+      <summary>freedb.me</summary>
       <p>
-        <a href="https://freedb.me">https://freedb.me</a>
-        <details name="9336384c28804b855c7acce7abd8cf2cc481c861d3808d95405bd4ad0b1c7fce">
-          <summary>Creating and maintaining databases for toy projects is a pain. freedb.me is a (fugly) free service for creating sqlite databases and querying them through HTTP requests. Written in go</summary>
+        <details name="02a7db39c7918c4da0f9ca63ffb7fb0f8068e800e4dd65689bc6396b4c23580b">
+          <summary>free sqlite databases. queried through HTTP API. hand made with go</summary>
           <p></p>
         </details>
-        <details name="9336384c28804b855c7acce7abd8cf2cc481c861d3808d95405bd4ad0b1c7fce">
+        <details name="02a7db39c7918c4da0f9ca63ffb7fb0f8068e800e4dd65689bc6396b4c23580b">
+          <summary>https://freedb.me</summary>
+          <p></p>
+        </details>
+        <details name="02a7db39c7918c4da0f9ca63ffb7fb0f8068e800e4dd65689bc6396b4c23580b">
           <summary>/images/freedb.png</summary>
           <p>
             <img src="/images/freedb.png" alt="/images/freedb.png" loading="lazy"></img>
@@ -307,17 +543,43 @@
       </p>
     </details>
     <details name="cb499ab78af5dcbedbce4dba799ef5eff29d31175a9c374556d871325182201b">
-      <summary>https://jot.tedsummer.com</summary>
+      <summary>jot</summary>
       <p>
-        <a href="https://jot.tedsummer.com">https://jot.tedsummer.com</a>
-        <details name="43932c9a6c46868856af9371b1f7ff259484f753997e7894aa2604d14aa6e360">
-          <summary>Post-it note taking and reminders app.</summary>
+        <details name="7a216ee206cd68f244ed8522826d9ef6e226b4379e0ecde53157f37da06ada4f">
+          <summary>Post-it notes and scheduled reminders app.</summary>
           <p></p>
         </details>
-        <details name="43932c9a6c46868856af9371b1f7ff259484f753997e7894aa2604d14aa6e360">
+        <details name="7a216ee206cd68f244ed8522826d9ef6e226b4379e0ecde53157f37da06ada4f">
+          <summary>https://jot.tedsummer.com</summary>
+          <p></p>
+        </details>
+        <details name="7a216ee206cd68f244ed8522826d9ef6e226b4379e0ecde53157f37da06ada4f">
           <summary>/images/jot.png</summary>
           <p>
             <img src="/images/jot.png" alt="/images/jot.png" loading="lazy"></img>
+          </p>
+        </details>
+      </p>
+    </details>
+    <details name="cb499ab78af5dcbedbce4dba799ef5eff29d31175a9c374556d871325182201b">
+      <summary>paropt: tool optimization automation</summary>
+      <p>
+        <details name="82e9248d79de71c436a73c2c66f883734776281694e7b2ea39210d8e028524e5">
+          <summary>https://github.com/macintoshpie/paropt</summary>
+          <p>
+            <a href="https://github.com/macintoshpie/paropt">https://github.com/macintoshpie/paropt</a>
+          </p>
+        </details>
+        <details name="82e9248d79de71c436a73c2c66f883734776281694e7b2ea39210d8e028524e5">
+          <summary>/images/paropt.png</summary>
+          <p>
+            <img src="/images/paropt.png" alt="/images/paropt.png" loading="lazy"></img>
+          </p>
+        </details>
+        <details name="82e9248d79de71c436a73c2c66f883734776281694e7b2ea39210d8e028524e5">
+          <summary>https://ieeexplore.ieee.org/abstract/document/8968866</summary>
+          <p>
+            <a href="https://ieeexplore.ieee.org/abstract/document/8968866">https://ieeexplore.ieee.org/abstract/document/8968866</a>
           </p>
         </details>
       </p>
