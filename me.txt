@@ -69,6 +69,13 @@
 
 
 - sometimes I write
+  - $ shorts
+    - perl should have used the keyword "my" for constants and "our" for variables
+      - ```
+my $NAME = "ted";
+our @shared_friends = ("alice", "bob", "charlie");
+```
+      - it also should have used camel case
   - $ linoleum
     - I wanted to make some prints on hats for a "running party" we were having. A mouse dubbed [Mr. Jiggy](https://banjokazooie.fandom.com/wiki/Jiggy) lives (lived) with us, so I wanted him as a mascot on each teams hat. So I bought some linoleum, cheap ass tools, and speedball fabric ink off amazon.
     - I found a chinese site that sells hat blanks, but I would not recommend it because the hats I received did not look like the advertised product. 1 star.
