@@ -5,6 +5,7 @@ import (
 	"os"
 	"strings"
 	"text/template"
+	"time"
 
 	"github.com/macintoshpie/listwebsite/dev"
 	"github.com/macintoshpie/listwebsite/monitors"
@@ -13,8 +14,16 @@ import (
 )
 
 const siteData = "me.txt"
-const siteTemplate = "me.tmpl.html"
 const out = "build/index.html"
+const siteTemplate = "me.tmpl.html"
+
+var templateData = struct {
+	Me   string
+	Date string
+}{
+	Me:   "",
+	Date: time.Now().Format("2006-01-02"),
+}
 
 func main() {
 	monitor, err := monitors.NewFileMonitor([]string{siteData, siteTemplate})
@@ -147,7 +156,8 @@ func buildHTML(siteDataFile, siteTemplateFile string) {
 		panic(err)
 	}
 
-	templateRoot.Execute(outFile, string(dataBytes))
+	templateData.Me = string(dataBytes)
+	templateRoot.Execute(outFile, templateData)
 }
 
 func encodeStartTag(e *xml.Encoder, name string, attrs ...xml.Attr) error {

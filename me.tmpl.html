@@ -13,6 +13,7 @@
         }
 
         body {
+            margin: 0;
             background-color: #fae7ff;
             background-image: radial-gradient(#000000 1.5px, transparent 0);
             background-size: 32px 32px;
@@ -36,9 +37,7 @@
             font:
                 16px "FreeMono",
                 monospace;
-            margin-left: 8px;
-            margin-right: 8px;
-            margin-bottom: 8px;
+            margin: 8px;
 
             background: rgba(255, 255, 255, 0.557);
             border-radius: var(--border-radius);
@@ -291,9 +290,20 @@
                 cursor: zoom-out;
             }
         }
+
+        footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+            z-index: -1;
+            font: 16px "FreeMono", monospace;
+            color: var(--accent-color);
+        }
     </style>
 </head>
 
 <body>
-    {{.}}
+    {{.Me}}
+    <footer>last updated {{.Date}}</footer>
 </body>
