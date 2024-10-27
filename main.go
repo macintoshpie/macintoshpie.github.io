@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"github.com/macintoshpie/listwebsite/dev"
+	"github.com/macintoshpie/listwebsite/highlighter"
 	"github.com/macintoshpie/listwebsite/monitors"
 	parser "github.com/macintoshpie/listwebsite/parsers"
 	"github.com/macintoshpie/listwebsite/walkers"
@@ -16,6 +17,8 @@ import (
 const siteData = "me.txt"
 const out = "build/index.html"
 const siteTemplate = "me.tmpl.html"
+
+const debug = false
 
 var templateData = struct {
 	Me   string
@@ -70,7 +73,9 @@ func buildHTML(siteDataFile, siteTemplateFile string) {
 	walker := walkers.NewWalker()
 	// use the xml package to construct the html
 	encoder := xml.NewEncoder(dataOutput)
-	encoder.Indent("", "  ")
+	if debug {
+		encoder.Indent("", "  ")
+	}
 
 	walker.AddEventListener(parser.RenderableBlockTypes[:], walkers.ListenerConfig{
 		OnEnter: func(node *parser.Node) {
@@ -118,6 +123,25 @@ func buildHTML(siteDataFile, siteTemplateFile string) {
 				encoder.EncodeToken(xml.CharData(node.Content))
 				encodeEndTag(encoder, "a")
 			}
+		},
+		OnExit: func(node *parser.Node) {
+		},
+	})
+
+	walker.AddEventListener([]parser.BlockType{parser.BlockPreformatted}, walkers.ListenerConfig{
+		OnEnter: func(node *parser.Node) {
+			codeLines := highlighter.ParseCode(node.Content)
+			encodeStartTag(encoder, "div", xml.Attr{Name: xml.Name{Local: "class"}, Value: "code-block"})
+			for _, line := range codeLines {
+				encodeStartTag(encoder, "div", xml.Attr{Name: xml.Name{Local: "class"}, Value: "code-line"})
+				for _, span := range line {
+					encodeStartTag(encoder, "span", xml.Attr{Name: xml.Name{Local: "class"}, Value: span.Kind})
+					encoder.EncodeToken(xml.CharData(span.Value))
+					encodeEndTag(encoder, "span")
+				}
+				encodeEndTag(encoder, "div")
+			}
+			encodeEndTag(encoder, "div")
 		},
 		OnExit: func(node *parser.Node) {
 		},
