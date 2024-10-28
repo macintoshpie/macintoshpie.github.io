@@ -37,7 +37,6 @@ func ParseFileTree(codeDir string, fileTypes []string, additionalFilePaths []str
 }
 
 func completeNode(path string, root *Node) {
-	fmt.Println("Doing path", path)
 	parts := strings.Split(path, "/")
 
 	currentNode := root
@@ -52,7 +51,6 @@ func completeNode(path string, root *Node) {
 		}
 
 		// doesn't already exist, create it
-		fmt.Println("Creating", part)
 		newNode := &Node{
 			Depth:     currentDepth,
 			Content:   part,

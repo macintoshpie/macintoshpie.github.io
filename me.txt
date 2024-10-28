@@ -21,8 +21,11 @@
   - this website (lists version)
     - This website is written as a single file as a big list
       - roughly follows syntax follows gemini gemfile format. will probably move further away from it as I go because its mine
+    - you can view the source code at /source code
+      - you can even read the code that reads my code to put it on this site
     - tests
-      - ```           // code formatting
+      - here's where i write tests for this website
+      - ```                 // code formatting
 def hello():
   print("world!")
 
@@ -37,7 +40,7 @@ foo = 1 + 2.3
 ```
     - todos
       - truncate all section headers, at x chars, then show full on hover. might need special consideration for mobile though b/c I think tap results in persistent hover
-        - ```           .truncate {
+        - ```                 .truncate {
   display: inline-block;
   width: 20ch; /* change 20 to the desired character limit */
   white-space: nowrap;
@@ -46,7 +49,6 @@ foo = 1 + 2.3
 }
 ```
       - fix text overflow for code. maybe do scrollable on overflow-x
-      - generate nodes using code files e.g. codeFilesRoot := parser.ParseFileTree(".", []string{".go"}, []string{"me.txt", "me.tmpl.html"})
   - tombola: generative music
     - Inspired by Teenage Engineering OP-1's tombola sequencer.
     - => https://tombola.tedsummer.com/
@@ -93,7 +95,7 @@ foo = 1 + 2.3
 - sometimes I write
   - $ shorts
     - perl should have used the keyword "my" for constants and "our" for variables
-      - ```           my $NAME = "ted";
+      - ```                 my $NAME = "ted";
 our @shared_friends = ("alice", "bob", "charlie");
 ```
       - it also should have used camel case
@@ -125,7 +127,7 @@ our @shared_friends = ("alice", "bob", "charlie");
       - => https://github.com/lambci/docker-lambda
     - To fix this, I created a small python proxy takes requests, converts them into API Gateway requests, forwards it to our docker container with the lambda, then converts the API Gateway response into a normal HTTP response. I _really_ struggled to get the python request handler to do all of the things I wanted, but eventually I got it working.
     - Here's the full script I use to run the lambda as an HTTP API locally. Since I'm using golang I use the `go1.x` tag for the container and provide the path to the executable. Also, I ended up wrapping the python starting process in a loop b/c it was taking a while for the port to become available again after killing and restarting the script.
-      - ```           bash
+      - ```                 bash
 #! /bin/bash
 # Starts a a mock lambda server allowing you to make requests
 set -e
@@ -212,11 +214,11 @@ while not started:
     - Here's a quick example of using jq in a for loop. jq has some nice functional stuff built in such as `map()`, but sometimes you need to do some fancy stuff with the data. This might be useful when you've filtered a jq array, and then need to iterate over the objects to do some work that you can't do in jq alone.
     - For this example, the goal is to iterate through an array of user objects, downloading their pictures. We'll use some fake user data from https://reqres.in/, you can download it with the script below
       - script
-        - ```           bash
+        - ```                 bash
 curl https://reqres.in/api/users?page=1 > user_loop.json
 ```
       - output
-        - ```           JSON
+        - ```                 JSON
 {
   "page": 1,
   "per_page": 6,
@@ -242,7 +244,7 @@ curl https://reqres.in/api/users?page=1 > user_loop.json
 }
 ```
     - The finished result
-      - ```           bash
+      - ```                 bash
 imagesDir="tmp_user_images"
 mkdir -p $imagesDir
 
@@ -254,7 +256,7 @@ while read -r user; do
 done <<< "$(cat user_loop.json | jq -c '.data[]')"
 ```
     - The part of interest (the looping), is written like this
-      - ```           bash
+      - ```                 bash
 while read -r user; do
   # do work on user object
 done <<< "$(cat user_loop.json | jq -c '.data[]')"
@@ -262,14 +264,14 @@ done <<< "$(cat user_loop.json | jq -c '.data[]')"
     - # # Breakdown
       - # ## Get the objects
         - First, we care only about the `data` array which stores our user objects containing the URLs, so we use that object id to access it:
-        - ```           bash
+        - ```                 bash
 cat user_loop.json | jq -c '.data[]'
 ```
         - Notice `-c` flag, it's important for looping over the objects. This tells jq to put each object onto a single line, which we'll use in the loop.
       - # ## Loop over lines
         - In bash, we can loop over lines by using the `while read -r varName; do ...; done <<< "$lineSeparatedVar"` pattern. `read -r <name>` will read in a line from STDIN, then assign the value to `<name>`; the `-r` flag tells `read` "do not allow backslashes to escape any characters".  
         - Now we can loop over objects from our array like so
-        - ```           bash
+        - ```                 bash
 while read -r user; do
   # do work on user object
 done <<< "$(cat user_loop.json | jq -c '.data[]')"
@@ -283,7 +285,7 @@ done <<< "$(cat user_loop.json | jq -c '.data[]')"
     - => https://stedolan.github.io/jq/
     - Question: What is the number of unique destination IPs a file is sent to, on average?  
       - A shortened version of the provided data, `incidents.json`, is below.
-        - ```           JSON
+        - ```                 JSON
 {
   "tickets": [
     {
@@ -317,7 +319,7 @@ done <<< "$(cat user_loop.json | jq -c '.data[]')"
       - > - Migos, Pipe it up
       - => https://www.youtube.com/watch?v=8g2KKGgK-0w
       - In jq you just create an array of the number of unique destination IPs for each file hash, then calculate the average:
-        - ```           bash
+        - ```                 bash
 $ cat incidents.json \
   | jq '[
           .tickets
@@ -330,7 +332,7 @@ $ cat incidents.json \
         - jq accepts a JSON document as input, so first we `cat` our JSON data into jq. In jq, arrays and individual elements can be piped into other functions.
     - # ## group_by
       - The first step is pretty straight forward. We select `tickets` and group the objects the objects by their `.file_hash` attribute, giving us this:
-      - ```           bash
+      - ```                 bash
 $ cat incidents.json \
   | jq '[
           .tickets
@@ -338,7 +340,7 @@ $ cat incidents.json \
         ]'
 ```
         - output:
-          - ```           JSON
+          - ```                 JSON
 [
   [
     {
@@ -386,7 +388,7 @@ $ cat incidents.json \
 ```
     - # ## unique_by
       - Next we find the objects with unique destination ips within each of these groups. I'm not sure how jq decides which object to select from a group that share a value, but it doesn't matter for our purposes.
-        - ```           bash
+        - ```                 bash
       $ cat incidents.json \
         | jq '[
                 .tickets
@@ -443,7 +445,7 @@ $ cat incidents.json \
 ```
     - # ## length
       - Then we get the number of objects in each group
-        - ```           bash
+        - ```                 bash
 $ cat incidents.json \
   | jq '[
           .tickets
@@ -453,7 +455,7 @@ $ cat incidents.json \
         ]'
 ```
       - output:
-        - ```           JSON
+        - ```                 JSON
 [
   1,
   2,
@@ -466,7 +468,7 @@ $ cat incidents.json \
 ```
     - # ## add / length
       - Then you can just pipe that array into `add / length` to calculate the average for the array
-        - ```           bash
+        - ```                 bash
 $ cat incidents.json \
   | jq '[
           .tickets
@@ -477,7 +479,7 @@ $ cat incidents.json \
         | add / length'
 ```
       - output:
-        - ```           JSON
+        - ```                 JSON
 1.4285714285714286
 ```
 - sometimes I talk
@@ -932,10 +934,10 @@ func main() {
 	}
 	done := make(chan bool)
 	go func() {
-		for file := range monitor.Changed {
-			println("File changed:", file)
-
+		for x := range monitor.Changed {
+			_ = x
 			buildHTML(siteData, siteTemplate)
+			fmt.Println("Rebuilt site")
 		}
 	}()
 
@@ -945,10 +947,10 @@ func main() {
 		panic(err)
 	}
 	go func() {
-		for file := range codeMonitor.Changed {
-			println("xxFile changed:", file)
-
+		for x := range codeMonitor.Changed {
+			_ = x
 			updateSiteDataSourceCode()
+			fmt.Println("Updated site data with source code")
 		}
 	}()
 
@@ -1299,7 +1301,6 @@ func ParseFileTree(codeDir string, fileTypes []string, additionalFilePaths []str
 }
 
 func completeNode(path string, root *Node) {
-	fmt.Println("Doing path", path)
 	parts := strings.Split(path, "/")
 
 	currentNode := root
@@ -1314,7 +1315,6 @@ func completeNode(path string, root *Node) {
 		}
 
 		// doesn't already exist, create it
-		fmt.Println("Creating", part)
 		newNode := &Node{
 			Depth:     currentDepth,
 			Content:   part,
@@ -1972,8 +1972,11 @@ func (lr *Walker) Walk(node *parser.Node) {
   - this website (lists version)
     - This website is written as a single file as a big list
       - roughly follows syntax follows gemini gemfile format. will probably move further away from it as I go because its mine
+    - you can view the source code at /source code
+      - you can even read the code that reads my code to put it on this site
     - tests
-      - \`\`\`           // code formatting
+      - here's where i write tests for this website
+      - \`\`\`                 // code formatting
 def hello():
   print("world!")
 
@@ -1988,7 +1991,7 @@ foo = 1 + 2.3
 \`\`\`
     - todos
       - truncate all section headers, at x chars, then show full on hover. might need special consideration for mobile though b/c I think tap results in persistent hover
-        - \`\`\`           .truncate {
+        - \`\`\`                 .truncate {
   display: inline-block;
   width: 20ch; /* change 20 to the desired character limit */
   white-space: nowrap;
@@ -1997,7 +2000,6 @@ foo = 1 + 2.3
 }
 \`\`\`
       - fix text overflow for code. maybe do scrollable on overflow-x
-      - generate nodes using code files e.g. codeFilesRoot := parser.ParseFileTree(".", []string{".go"}, []string{"me.txt", "me.tmpl.html"})
   - tombola: generative music
     - Inspired by Teenage Engineering OP-1's tombola sequencer.
     - => https://tombola.tedsummer.com/
@@ -2044,7 +2046,7 @@ foo = 1 + 2.3
 - sometimes I write
   - $ shorts
     - perl should have used the keyword "my" for constants and "our" for variables
-      - \`\`\`           my $NAME = "ted";
+      - \`\`\`                 my $NAME = "ted";
 our @shared_friends = ("alice", "bob", "charlie");
 \`\`\`
       - it also should have used camel case
@@ -2076,7 +2078,7 @@ our @shared_friends = ("alice", "bob", "charlie");
       - => https://github.com/lambci/docker-lambda
     - To fix this, I created a small python proxy takes requests, converts them into API Gateway requests, forwards it to our docker container with the lambda, then converts the API Gateway response into a normal HTTP response. I _really_ struggled to get the python request handler to do all of the things I wanted, but eventually I got it working.
     - Here's the full script I use to run the lambda as an HTTP API locally. Since I'm using golang I use the `go1.x` tag for the container and provide the path to the executable. Also, I ended up wrapping the python starting process in a loop b/c it was taking a while for the port to become available again after killing and restarting the script.
-      - \`\`\`           bash
+      - \`\`\`                 bash
 #! /bin/bash
 # Starts a a mock lambda server allowing you to make requests
 set -e
@@ -2163,11 +2165,11 @@ while not started:
     - Here's a quick example of using jq in a for loop. jq has some nice functional stuff built in such as `map()`, but sometimes you need to do some fancy stuff with the data. This might be useful when you've filtered a jq array, and then need to iterate over the objects to do some work that you can't do in jq alone.
     - For this example, the goal is to iterate through an array of user objects, downloading their pictures. We'll use some fake user data from https://reqres.in/, you can download it with the script below
       - script
-        - \`\`\`           bash
+        - \`\`\`                 bash
 curl https://reqres.in/api/users?page=1 > user_loop.json
 \`\`\`
       - output
-        - \`\`\`           JSON
+        - \`\`\`                 JSON
 {
   "page": 1,
   "per_page": 6,
@@ -2193,7 +2195,7 @@ curl https://reqres.in/api/users?page=1 > user_loop.json
 }
 \`\`\`
     - The finished result
-      - \`\`\`           bash
+      - \`\`\`                 bash
 imagesDir="tmp_user_images"
 mkdir -p $imagesDir
 
@@ -2205,7 +2207,7 @@ while read -r user; do
 done <<< "$(cat user_loop.json | jq -c '.data[]')"
 \`\`\`
     - The part of interest (the looping), is written like this
-      - \`\`\`           bash
+      - \`\`\`                 bash
 while read -r user; do
   # do work on user object
 done <<< "$(cat user_loop.json | jq -c '.data[]')"
@@ -2213,14 +2215,14 @@ done <<< "$(cat user_loop.json | jq -c '.data[]')"
     - # # Breakdown
       - # ## Get the objects
         - First, we care only about the `data` array which stores our user objects containing the URLs, so we use that object id to access it:
-        - \`\`\`           bash
+        - \`\`\`                 bash
 cat user_loop.json | jq -c '.data[]'
 \`\`\`
         - Notice `-c` flag, it's important for looping over the objects. This tells jq to put each object onto a single line, which we'll use in the loop.
       - # ## Loop over lines
         - In bash, we can loop over lines by using the `while read -r varName; do ...; done <<< "$lineSeparatedVar"` pattern. `read -r <name>` will read in a line from STDIN, then assign the value to `<name>`; the `-r` flag tells `read` "do not allow backslashes to escape any characters".  
         - Now we can loop over objects from our array like so
-        - \`\`\`           bash
+        - \`\`\`                 bash
 while read -r user; do
   # do work on user object
 done <<< "$(cat user_loop.json | jq -c '.data[]')"
@@ -2234,7 +2236,7 @@ done <<< "$(cat user_loop.json | jq -c '.data[]')"
     - => https://stedolan.github.io/jq/
     - Question: What is the number of unique destination IPs a file is sent to, on average?  
       - A shortened version of the provided data, `incidents.json`, is below.
-        - \`\`\`           JSON
+        - \`\`\`                 JSON
 {
   "tickets": [
     {
@@ -2268,7 +2270,7 @@ done <<< "$(cat user_loop.json | jq -c '.data[]')"
       - > - Migos, Pipe it up
       - => https://www.youtube.com/watch?v=8g2KKGgK-0w
       - In jq you just create an array of the number of unique destination IPs for each file hash, then calculate the average:
-        - \`\`\`           bash
+        - \`\`\`                 bash
 $ cat incidents.json \
   | jq '[
           .tickets
@@ -2281,7 +2283,7 @@ $ cat incidents.json \
         - jq accepts a JSON document as input, so first we `cat` our JSON data into jq. In jq, arrays and individual elements can be piped into other functions.
     - # ## group_by
       - The first step is pretty straight forward. We select `tickets` and group the objects the objects by their `.file_hash` attribute, giving us this:
-      - \`\`\`           bash
+      - \`\`\`                 bash
 $ cat incidents.json \
   | jq '[
           .tickets
@@ -2289,7 +2291,7 @@ $ cat incidents.json \
         ]'
 \`\`\`
         - output:
-          - \`\`\`           JSON
+          - \`\`\`                 JSON
 [
   [
     {
@@ -2337,7 +2339,7 @@ $ cat incidents.json \
 \`\`\`
     - # ## unique_by
       - Next we find the objects with unique destination ips within each of these groups. I'm not sure how jq decides which object to select from a group that share a value, but it doesn't matter for our purposes.
-        - \`\`\`           bash
+        - \`\`\`                 bash
       $ cat incidents.json \
         | jq '[
                 .tickets
@@ -2394,7 +2396,7 @@ $ cat incidents.json \
 \`\`\`
     - # ## length
       - Then we get the number of objects in each group
-        - \`\`\`           bash
+        - \`\`\`                 bash
 $ cat incidents.json \
   | jq '[
           .tickets
@@ -2404,7 +2406,7 @@ $ cat incidents.json \
         ]'
 \`\`\`
       - output:
-        - \`\`\`           JSON
+        - \`\`\`                 JSON
 [
   1,
   2,
@@ -2417,7 +2419,7 @@ $ cat incidents.json \
 \`\`\`
     - # ## add / length
       - Then you can just pipe that array into `add / length` to calculate the average for the array
-        - \`\`\`           bash
+        - \`\`\`                 bash
 $ cat incidents.json \
   | jq '[
           .tickets
@@ -2428,7 +2430,7 @@ $ cat incidents.json \
         | add / length'
 \`\`\`
       - output:
-        - \`\`\`           JSON
+        - \`\`\`                 JSON
 1.4285714285714286
 \`\`\`
 - sometimes I talk

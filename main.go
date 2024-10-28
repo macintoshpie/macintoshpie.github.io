@@ -38,10 +38,10 @@ func main() {
 	}
 	done := make(chan bool)
 	go func() {
-		for file := range monitor.Changed {
-			println("File changed:", file)
-
+		for x := range monitor.Changed {
+			_ = x
 			buildHTML(siteData, siteTemplate)
+			fmt.Println("Rebuilt site")
 		}
 	}()
 
@@ -51,10 +51,10 @@ func main() {
 		panic(err)
 	}
 	go func() {
-		for file := range codeMonitor.Changed {
-			println("xxFile changed:", file)
-
+		for x := range codeMonitor.Changed {
+			_ = x
 			updateSiteDataSourceCode()
+			fmt.Println("Updated site data with source code")
 		}
 	}()
 
