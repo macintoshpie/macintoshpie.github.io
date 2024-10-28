@@ -17,15 +17,12 @@
       - => http://www.beerxml.com/
     - css
       - just kidding i have no idea how to use it properly
-
-
 - sometimes I make things
   - this website (lists version)
     - This website is written as a single file as a big list
       - roughly follows syntax follows gemini gemfile format. will probably move further away from it as I go because its mine
     - tests
-      - ```
-// code formatting
+      - ```           // code formatting
 def hello():
   print("world!")
 
@@ -40,8 +37,7 @@ foo = 1 + 2.3
 ```
     - todos
       - truncate all section headers, at x chars, then show full on hover. might need special consideration for mobile though b/c I think tap results in persistent hover
-        - ```
-.truncate {
+        - ```           .truncate {
   display: inline-block;
   width: 20ch; /* change 20 to the desired character limit */
   white-space: nowrap;
@@ -94,13 +90,10 @@ foo = 1 + 2.3
   - pentaku js
     - Play against a friend or naive bots in pentago, gomoku, and other grid based games.
     - => /images/pentaku.png
-
-
 - sometimes I write
   - $ shorts
     - perl should have used the keyword "my" for constants and "our" for variables
-      - ```
-my $NAME = "ted";
+      - ```           my $NAME = "ted";
 our @shared_friends = ("alice", "bob", "charlie");
 ```
       - it also should have used camel case
@@ -114,20 +107,16 @@ our @shared_friends = ("alice", "bob", "charlie");
     - => /images/jiggy-print.png
     - I of course forgot that the print would be "in reverse" (flipped on horizontally) but who cares when it's a mouse. It would have been a problem if I stuck with the original plan of writing "stay sweaty" in Bosnian underneath but I scrapped that after our Bosnian friend began to explain the fact that Bosnian has gendered nouns and I didn't like the longer alternatives.
     - Though I just did some googling/llming and found some cool bosnian bro speak like "živa legenda" (living legend) which would have been dope.
-
     - => /images/amjo-brate-shirt.png
     - > chatgpt tells me "ajmo brate" says "lets go bro" and I found this shirt on amazon (supposedly) saying "let's go bro, sit in the tavern, order, drink, and eat, let the eyes shine from the wine, we don't live for a thousand years" which is a sentiment I appreciate
-
     - I rolled the ink on 4th of july paper plates that were too small. I will be looking for glass panes or something similar for rolling ink at the animal crossing store in future visits.
     - I learned that I have no idea how much ink to use, and that you should put a solid thing behind whatever you're printing on (the mesh backing left a pattern in the first print). But it does seem cool to experiment printing with some patterned texture behind the print.
     - I had been warned that nylon is a terrible fabric to print on but I did it anyways.
     - It's still not fully dry after 12 hours but whatever. we'll see. it'll probably wash out.
-
     - The first few hats looked ok. In future prints I'd like to try a few things:
       - simpler design
       - bigger design (~2.5 inches)
       - trim off more of the excess linoleum when working with awkward printing surfaces
-
     - => /images/jiggy-hats.png
     - > the white print had way too much ink I think. The black print looks wonky because I printed without a solid surface behind the fabric (the mesh behind the hat came through).
   - $ aws lambda: local server
@@ -136,7 +125,7 @@ our @shared_friends = ("alice", "bob", "charlie");
       - => https://github.com/lambci/docker-lambda
     - To fix this, I created a small python proxy takes requests, converts them into API Gateway requests, forwards it to our docker container with the lambda, then converts the API Gateway response into a normal HTTP response. I _really_ struggled to get the python request handler to do all of the things I wanted, but eventually I got it working.
     - Here's the full script I use to run the lambda as an HTTP API locally. Since I'm using golang I use the `go1.x` tag for the container and provide the path to the executable. Also, I ended up wrapping the python starting process in a loop b/c it was taking a while for the port to become available again after killing and restarting the script.
-      - ```bash
+      - ```           bash
 #! /bin/bash
 # Starts a a mock lambda server allowing you to make requests
 set -e
@@ -223,11 +212,11 @@ while not started:
     - Here's a quick example of using jq in a for loop. jq has some nice functional stuff built in such as `map()`, but sometimes you need to do some fancy stuff with the data. This might be useful when you've filtered a jq array, and then need to iterate over the objects to do some work that you can't do in jq alone.
     - For this example, the goal is to iterate through an array of user objects, downloading their pictures. We'll use some fake user data from https://reqres.in/, you can download it with the script below
       - script
-        - ```bash
+        - ```           bash
 curl https://reqres.in/api/users?page=1 > user_loop.json
 ```
       - output
-        - ```JSON
+        - ```           JSON
 {
   "page": 1,
   "per_page": 6,
@@ -253,7 +242,7 @@ curl https://reqres.in/api/users?page=1 > user_loop.json
 }
 ```
     - The finished result
-      - ```bash
+      - ```           bash
 imagesDir="tmp_user_images"
 mkdir -p $imagesDir
 
@@ -265,38 +254,36 @@ while read -r user; do
 done <<< "$(cat user_loop.json | jq -c '.data[]')"
 ```
     - The part of interest (the looping), is written like this
-      - ```bash
+      - ```           bash
 while read -r user; do
   # do work on user object
 done <<< "$(cat user_loop.json | jq -c '.data[]')"
 ```
-    - ## Breakdown
-      - ### Get the objects
+    - # # Breakdown
+      - # ## Get the objects
         - First, we care only about the `data` array which stores our user objects containing the URLs, so we use that object id to access it:
-        - ```bash
+        - ```           bash
 cat user_loop.json | jq -c '.data[]'
 ```
         - Notice `-c` flag, it's important for looping over the objects. This tells jq to put each object onto a single line, which we'll use in the loop.
-
-      - ### Loop over lines
+      - # ## Loop over lines
         - In bash, we can loop over lines by using the `while read -r varName; do ...; done <<< "$lineSeparatedVar"` pattern. `read -r <name>` will read in a line from STDIN, then assign the value to `<name>`; the `-r` flag tells `read` "do not allow backslashes to escape any characters".  
         - Now we can loop over objects from our array like so
-        - ```bash
+        - ```           bash
 while read -r user; do
   # do work on user object
 done <<< "$(cat user_loop.json | jq -c '.data[]')"
 ```
-    - ## Notes
+    - # # Notes
       - I've not fully tested this code. You may want to base64 encode the objects, then decode them if you wanna be really safe.
       - `curl` concurrently, toss a `&` on the end of the curl to run it as a background process
-
   - jq: group, unique, average
     - Recently I've been running through picoCTF 2018 and saw this problem that can be solved with some cool stuff from jq (a handy JSON processor for the command line).
     - => https://2018game.picoctf.com/
     - => https://stedolan.github.io/jq/
     - Question: What is the number of unique destination IPs a file is sent to, on average?  
       - A shortened version of the provided data, `incidents.json`, is below.
-        - ```JSON
+        - ```           JSON
 {
   "tickets": [
     {
@@ -330,7 +317,7 @@ done <<< "$(cat user_loop.json | jq -c '.data[]')"
       - > - Migos, Pipe it up
       - => https://www.youtube.com/watch?v=8g2KKGgK-0w
       - In jq you just create an array of the number of unique destination IPs for each file hash, then calculate the average:
-        - ```bash
+        - ```           bash
 $ cat incidents.json \
   | jq '[
           .tickets
@@ -340,20 +327,18 @@ $ cat incidents.json \
         ]
         | add / length'
 ```
-
         - jq accepts a JSON document as input, so first we `cat` our JSON data into jq. In jq, arrays and individual elements can be piped into other functions.
-    - ### group_by
+    - # ## group_by
       - The first step is pretty straight forward. We select `tickets` and group the objects the objects by their `.file_hash` attribute, giving us this:
-      - ```bash
+      - ```           bash
 $ cat incidents.json \
   | jq '[
           .tickets
           | group_by(.file_hash)[]
         ]'
 ```
-
         - output:
-          - ```JSON
+          - ```           JSON
 [
   [
     {
@@ -399,19 +384,18 @@ $ cat incidents.json \
   ]
 ]
 ```
-    - ### unique_by
-
+    - # ## unique_by
       - Next we find the objects with unique destination ips within each of these groups. I'm not sure how jq decides which object to select from a group that share a value, but it doesn't matter for our purposes.
-        - ```bash
+        - ```           bash
       $ cat incidents.json \
         | jq '[
                 .tickets
                 | group_by(.file_hash)[]
                 | unique_by(.dst_ip)
               ]'
-      ```
+      \`\`\`
       - output:
-        - ```JSON
+        - \`\`\`JSON
 [
   [
     {
@@ -457,12 +441,9 @@ $ cat incidents.json \
   ]
 ]
 ```
-
-    - ### length
-
+    - # ## length
       - Then we get the number of objects in each group
-
-        - ```bash
+        - ```           bash
 $ cat incidents.json \
   | jq '[
           .tickets
@@ -472,7 +453,7 @@ $ cat incidents.json \
         ]'
 ```
       - output:
-        - ```JSON
+        - ```           JSON
 [
   1,
   2,
@@ -483,12 +464,9 @@ $ cat incidents.json \
   2
 ]
 ```
-
-    - ### add / length
-
+    - # ## add / length
       - Then you can just pipe that array into `add / length` to calculate the average for the array
-
-        - ```bash
+        - ```           bash
 $ cat incidents.json \
   | jq '[
           .tickets
@@ -499,11 +477,9 @@ $ cat incidents.json \
         | add / length'
 ```
       - output:
-        - ```JSON
+        - ```           JSON
 1.4285714285714286
 ```
-
-
 - sometimes I talk
   - server-sent events
     - A brief introduction to server-sent events, when to use them and when not to use them.
@@ -513,8 +489,6 @@ $ cat incidents.json \
     - Introduction to Schematron, a language for validating XML documents.
     - => /images/schematron.png
     - => https://docs.google.com/presentation/d/16wpjtIqwqj0yagdQcObRzdDI6l_gYxCX/edit?usp=sharing&ouid=111583935946353067252&rtpof=true&sd=true
-
-
 - $ resume
   - education
     - M.S. in computer science
@@ -549,8 +523,2308 @@ $ cat incidents.json \
       - Created an embedded database application in Java with functional GUI for more effective recruitment
   - tools and such
     - watever
+- source code
+  - dev
+   - server.go
+    - ``` package dev
+
+import (
+	"crypto/tls"
+	"fmt"
+	"io"
+	"log"
+	"net"
+	"net/http"
+	"net/url"
+	"os"
+	"path/filepath"
+	"strconv"
+	"strings"
+)
+
+const httpAddr = ":8080"
+const geminiAddr = ":8081"
+const geminiCertFile = "dev-cert.pem"
+const geminiKeyFile = "dev-key.pem"
+
+var geminiLogger = log.New(os.Stdout, "[Gemini Server] ", log.LstdFlags|log.Lshortfile)
+
+func ServeDirectory(dir string) {
+	// serve files from the directory
+	http.Handle("/", http.FileServer(http.Dir(dir)))
+
+	fullAddr := fmt.Sprintf("http://localhost%s", httpAddr)
+	fmt.Println("[HTTP Server] Serving HTTP on", fullAddr)
+	// start the server
+	http.ListenAndServe(httpAddr, nil)
+}
+
+func GeminiServeDirectory(dir string) {
+
+	cert, err := tls.LoadX509KeyPair(geminiCertFile, geminiKeyFile)
+	if err != nil {
+		panic(err)
+	}
+	config := &tls.Config{
+		MinVersion:   tls.VersionTLS12,
+		MaxVersion:   tls.VersionTLS13,
+		Certificates: []tls.Certificate{cert},
+	}
+	ln, err := tls.Listen("tcp", geminiAddr, config)
+	if err != nil {
+		panic(err)
+	}
+
+	fullAddr := fmt.Sprintf("gemini://localhost%s", geminiAddr)
+	geminiLogger.Println("Serving Gemini on", fullAddr, "from", dir)
+	for {
+		conn, err := ln.Accept()
+		if err != nil {
+			panic(err)
+		}
+		go handleGeminiRequest(conn, dir)
+	}
+}
+
+const responseInvalidRequest = "59 Invalid request\r\n"
+
+// handleGeminiRequest handles a single Gemini request
+// Docs:
+// https://geminiprotocol.net/docs/protocol-specification.gmi
+// gemini://geminiprotocol.net/docs/protocol-specification.gmi
+func handleGeminiRequest(conn net.Conn, dir string) {
+	absBaseDir, err := filepath.Abs(dir)
+
+	if err != nil {
+		geminiLogger.Println("Error getting absolute path for base directory:", dir)
+		conn.Write([]byte(responseInvalidRequest))
+		return
+	}
+
+	defer conn.Close()
+
+	uriMaxBytes := 1024
+	// +2 for \r\n
+	req := make([]byte, uriMaxBytes+2)
+	bytesRead, err := conn.Read(req)
+	if err != nil {
+		panic(err)
+	}
+
+	uriString := string(req[:bytesRead])
+	if uriString[len(uriString)-2:] != "\r\n" {
+		geminiLogger.Println("Request too long or missing CRLF:", uriString)
+		conn.Write([]byte(responseInvalidRequest))
+		return
+	}
+
+	uriString = uriString[:len(uriString)-2]
+
+	uriReq, err := url.ParseRequestURI(uriString)
+	if err != nil {
+		geminiLogger.Println("Invalid URI:", uriString)
+		conn.Write([]byte(responseInvalidRequest))
+		return
+	}
+
+	dirPath := filepath.Join(absBaseDir, uriReq.Path)
+	resourcePath, err := filepath.Abs(dirPath)
+	if err != nil {
+		geminiLogger.Println("Error getting absolute path from requested filepath:", dirPath)
+		conn.Write([]byte(responseInvalidRequest))
+		return
+	}
+
+	// check if the requested file is in the base directory
+	// haven't been able to sufficiently test this so it could be insecure
+	isServable := strings.HasPrefix(resourcePath, absBaseDir+string(filepath.Separator))
+	if !isServable {
+		geminiLogger.Println("Requested file is not in the base directory:", resourcePath)
+		conn.Write([]byte(responseInvalidRequest))
+		return
+	}
+
+	response := handleGeminiFileRequest(resourcePath, true)
+	geminiLogger.Printf("%s -> %d\n", uriReq.Path, response.statusCode)
+	response.Write(conn)
+}
+
+type GeminiResponse struct {
+	statusCode int
+	mimeType   string
+	content    string
+	errorMsg   string
+}
+
+func (r GeminiResponse) Write(w io.Writer) {
+	responseType := string(strconv.Itoa(r.statusCode)[0])
+	switch responseType {
+	case "2":
+		w.Write([]byte(fmt.Sprintf("%d %s\r\n", r.statusCode, r.mimeType)))
+		w.Write([]byte(r.content))
+	case "4", "5":
+		w.Write([]byte(fmt.Sprintf("%d %s\r\n", r.statusCode, r.errorMsg)))
+	default:
+		w.Write([]byte(fmt.Sprintf("%d %s\r\n", 40, "Internal server error")))
+	}
+}
+
+func handleGeminiFileRequest(path string, allowDir bool) GeminiResponse {
+	f, err := os.Stat(path)
+	if err != nil {
+		return GeminiResponse{
+			statusCode: 51,
+			errorMsg:   "File not found",
+		}
+	}
+
+	if f.IsDir() {
+		if !allowDir {
+			return GeminiResponse{
+				statusCode: 51,
+				errorMsg:   "File not found",
+			}
+		}
+
+		// try serving an index.gmi file
+		indexPath := filepath.Join(path, "index.gmi")
+		return handleGeminiFileRequest(indexPath, false)
+	}
+
+	return constructGeminiFileResponse(path)
+}
+
+func constructGeminiFileResponse(path string) GeminiResponse {
+	file, err := os.Open(path)
+	if err != nil {
+		return GeminiResponse{
+			statusCode: 51,
+			errorMsg:   "File not found",
+		}
+	}
+	defer file.Close()
+
+	sniffedContentType, err := sniffContentType(file)
+	if err != nil {
+		return GeminiResponse{
+			statusCode: 40,
+			errorMsg:   "Unexpected error",
+		}
+	}
+
+	content := new(strings.Builder)
+	buf := make([]byte, 1024)
+	_, err = file.Seek(0, 0)
+	if err != nil {
+		return GeminiResponse{
+			statusCode: 40,
+			errorMsg:   "Unexpected error",
+		}
+	}
+
+	for {
+		n, err := file.Read(buf)
+		if err != nil {
+			break
+		}
+		content.Write(buf[:n])
+	}
+
+	return GeminiResponse{
+		statusCode: 20,
+		mimeType:   sniffedContentType,
+		content:    content.String(),
+	}
+}
+
+func sniffContentType(file *os.File) (string, error) {
+	_, err := file.Seek(0, 0)
+	if err != nil {
+		return "", err
+	}
+
+	sniffData := make([]byte, 512)
+	_, err = file.Read(sniffData)
+	if err != nil {
+		return "", err
+	}
+
+	_, err = file.Seek(0, 0)
+	if err != nil {
+		return "", err
+	}
+
+	detectedType := http.DetectContentType(sniffData)
+	if detectedType == "application/octet-stream" && filepath.Ext(file.Name()) == ".gmi" {
+		return "text/gemini", nil
+	}
+
+	return detectedType, nil
+}
+
+```
+  - highlighter
+   - highlighter.go
+    - ``` package highlighter
+
+import (
+	"regexp"
+	"slices"
+)
+
+type TokenPattern struct {
+	Name     string
+	Pattern  *regexp.Regexp
+	Priority int
+}
+
+// ordered by precedence (lowest to highest)
+var allPatterns = []TokenPattern{
+	{Name: "whitespace", Pattern: regexp.MustCompile(`\s+`), Priority: 0},
+	{Name: "boolean", Pattern: regexp.MustCompile(`true|false|True|False`), Priority: 10},
+	{Name: "operator", Pattern: regexp.MustCompile(`[+\-*/\.\=\{\}\(\)\[\];:]`), Priority: 20},
+	{Name: "number", Pattern: regexp.MustCompile(`\d+(\.\d+)?`), Priority: 30},
+	{Name: "string", Pattern: regexp.MustCompile(`"[^"]+"`), Priority: 40},
+	{Name: "comment", Pattern: regexp.MustCompile(`//.*`), Priority: 50},
+}
+
+type Span struct {
+	Start        int
+	End          int
+	Value        string
+	Kind         string
+	tokenPattern TokenPattern
+}
+
+func parseLine(line string) []Span {
+	allMatches := []Span{}
+	for _, p := range allPatterns {
+		matches := p.Pattern.FindAllStringIndex(line, -1)
+		for _, match := range matches {
+			span := Span{
+				Start:        match[0],
+				End:          match[1],
+				Value:        line[match[0]:match[1]],
+				Kind:         p.Name,
+				tokenPattern: p,
+			}
+
+			allMatches = append(allMatches, span)
+		}
+	}
+
+	slices.SortFunc(allMatches, func(a, b Span) int {
+		return a.Start - b.Start
+	})
+
+	mergedSpans := []Span{}
+	for _, match := range allMatches {
+		if len(mergedSpans) == 0 {
+			mergedSpans = append(mergedSpans, match)
+			continue
+		}
+
+		lastSpan := mergedSpans[len(mergedSpans)-1]
+		if lastSpan.Start <= match.Start && match.Start < lastSpan.End {
+			if match.tokenPattern.Priority > lastSpan.tokenPattern.Priority {
+				mergedSpans[len(mergedSpans)-1] = match
+			}
+		} else {
+			mergedSpans = append(mergedSpans, match)
+		}
+	}
+
+	// fill in gaps of spans as words
+	completeSpans := []Span{}
+	for i, span := range mergedSpans {
+		if i == 0 {
+			if span.Start > 0 {
+				completeSpans = append(completeSpans, Span{
+					Start: 0,
+					End:   span.Start,
+					Value: line[0:span.Start],
+					Kind:  "word",
+				})
+			}
+
+			completeSpans = append(completeSpans, span)
+		} else {
+			lastSpan := mergedSpans[i-1]
+			if lastSpan.End == span.Start {
+				completeSpans = append(completeSpans, span)
+			} else {
+				completeSpans = append(completeSpans, Span{
+					Start: lastSpan.End,
+					End:   span.Start,
+					Value: line[lastSpan.End:span.Start],
+					Kind:  "word",
+				})
+				completeSpans = append(completeSpans, span)
+			}
+		}
+	}
+
+	// fill in the last word if there is one
+	if len(mergedSpans) != 0 {
+		lastSpan := mergedSpans[len(mergedSpans)-1]
+		if lastSpan.End < len(line)-1 {
+			completeSpans = append(completeSpans, Span{
+				Start: lastSpan.End,
+				End:   len(line),
+				Value: line[lastSpan.End:],
+				Kind:  "word",
+			})
+		}
+	}
+
+	return completeSpans
+}
+
+func ParseCode(code string) [][]Span {
+	lineSpans := [][]Span{}
+	for _, line := range regexp.MustCompile(`\n`).Split(code, -1) {
+		spans := parseLine(line)
+		lineSpans = append(lineSpans, spans)
+	}
+
+	return lineSpans
+}
+
+```
+  - main.go
+   - ``` package main
+
+import (
+	"encoding/xml"
+	"fmt"
+	"os"
+	"strings"
+	"text/template"
+	"time"
+
+	"github.com/macintoshpie/listwebsite/dev"
+	"github.com/macintoshpie/listwebsite/highlighter"
+	"github.com/macintoshpie/listwebsite/monitors"
+	parser "github.com/macintoshpie/listwebsite/parsers"
+	"github.com/macintoshpie/listwebsite/renderers"
+	"github.com/macintoshpie/listwebsite/walkers"
+)
+
+const siteData = "me.txt"
+const out = "build/index.html"
+const siteTemplate = "me.tmpl.html"
+
+const debug = false
+
+var templateData = struct {
+	Me   string
+	Date string
+}{
+	Me:   "",
+	Date: time.Now().Format("2006-01-02"),
+}
+
+func main() {
+	// build the site every time the site data changes
+	monitor, err := monitors.NewFileMonitor([]string{siteData, siteTemplate})
+	if err != nil {
+		panic(err)
+	}
+	done := make(chan bool)
+	go func() {
+		for file := range monitor.Changed {
+			println("File changed:", file)
+
+			buildHTML(siteData, siteTemplate)
+		}
+	}()
+
+	// update the site data every time one of the code file changes
+	codeMonitor, err := monitors.NewFileMonitor([]string{"main.go", "parsers/parser.go", "highlighter/highlighter.go", "parsers/fileTreeParser.go"})
+	if err != nil {
+		panic(err)
+	}
+	go func() {
+		for file := range codeMonitor.Changed {
+			println("xxFile changed:", file)
+
+			updateSiteDataSourceCode()
+		}
+	}()
+
+	go func() {
+		dev.ServeDirectory("build")
+	}()
+
+	go func() {
+		dev.GeminiServeDirectory("build")
+	}()
+
+	<-done
+}
+
+func buildHTML(siteDataFile, siteTemplateFile string) {
+	siteTxt, err := os.Open(siteDataFile)
+	if err != nil {
+		panic(err)
+	}
+	defer siteTxt.Close()
+
+	root := parser.Parse(siteTxt)
+
+	dataOutput, err := os.CreateTemp(os.TempDir(), "listwebsite-*.html")
+	if err != nil {
+		panic(err)
+	}
+	defer dataOutput.Close()
+
+	walker := walkers.NewWalker()
+	// use the xml package to construct the html
+	encoder := xml.NewEncoder(dataOutput)
+	if debug {
+		encoder.Indent("", "  ")
+	}
+
+	walker.AddEventListener(parser.RenderableBlockTypes[:], walkers.ListenerConfig{
+		OnEnter: func(node *parser.Node) {
+			attrs := []xml.Attr{
+				{Name: xml.Name{Local: "name"}, Value: node.Parent.ID},
+			}
+			encodeStartTag(encoder, "details", attrs...)
+			attrs = nil
+			if node.Content == "css" {
+				attrs = []xml.Attr{{Name: xml.Name{Local: "id"}, Value: "sillyCss"}}
+			}
+			encodeStartTag(encoder, "summary", attrs...)
+			encoder.EncodeToken(xml.CharData(getNodeSummary(node)))
+			encodeEndTag(encoder, "summary")
+			encodeStartTag(encoder, "p")
+		},
+		OnExit: func(node *parser.Node) {
+			encodeEndTag(encoder, "p")
+			encodeEndTag(encoder, "details")
+		},
+	})
+
+	walker.AddEventListener([]parser.BlockType{parser.BlockLink}, walkers.ListenerConfig{
+		OnEnter: func(node *parser.Node) {
+			if isProbablyImage(node.Content) {
+				attrs := []xml.Attr{
+					{Name: xml.Name{Local: "src"}, Value: node.Content},
+					{Name: xml.Name{Local: "alt"}, Value: node.Content},
+					{Name: xml.Name{Local: "loading"}, Value: "lazy"},
+				}
+				encodeStartTag(encoder, "img", attrs...)
+				encodeEndTag(encoder, "img")
+			} else if isProbablyYouTube(node.Content) {
+				attrs := []xml.Attr{
+					{Name: xml.Name{Local: "src"}, Value: node.Content},
+					{Name: xml.Name{Local: "loading"}, Value: "lazy"},
+					{Name: xml.Name{Local: "frameborder"}, Value: "0"},
+					{Name: xml.Name{Local: "allow"}, Value: "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"},
+					{Name: xml.Name{Local: "allowfullscreen"}, Value: "true"},
+				}
+				encodeStartTag(encoder, "iframe", attrs...)
+				encodeEndTag(encoder, "iframe")
+			} else {
+				encodeStartTag(encoder, "a", xml.Attr{Name: xml.Name{Local: "href"}, Value: node.Content})
+				encoder.EncodeToken(xml.CharData(node.Content))
+				encodeEndTag(encoder, "a")
+			}
+		},
+		OnExit: func(node *parser.Node) {
+		},
+	})
+
+	walker.AddEventListener([]parser.BlockType{parser.BlockPreformatted}, walkers.ListenerConfig{
+		OnEnter: func(node *parser.Node) {
+			codeLines := highlighter.ParseCode(node.Content)
+			encodeStartTag(encoder, "div", xml.Attr{Name: xml.Name{Local: "class"}, Value: "code-block"})
+			for _, line := range codeLines {
+				encodeStartTag(encoder, "div", xml.Attr{Name: xml.Name{Local: "class"}, Value: "code-line"})
+				for _, span := range line {
+					encodeStartTag(encoder, "span", xml.Attr{Name: xml.Name{Local: "class"}, Value: span.Kind})
+					encoder.EncodeToken(xml.CharData(span.Value))
+					encodeEndTag(encoder, "span")
+				}
+				encodeEndTag(encoder, "div")
+			}
+			encodeEndTag(encoder, "div")
+		},
+		OnExit: func(node *parser.Node) {
+		},
+	})
+
+	walker.Walk(root)
+	err = encoder.Flush()
+	if err != nil {
+		panic(err)
+	}
+	err = encoder.Close()
+	if err != nil {
+		panic(err)
+	}
+
+	// now drop the output into the template
+	templateFile, err := os.Open(siteTemplateFile)
+	if err != nil {
+		panic(err)
+	}
+	defer templateFile.Close()
+
+	// use the text/template package to render the template to avoid escaping the html
+	templateRoot, err := template.ParseFiles(siteTemplateFile)
+	if err != nil {
+		panic(err)
+	}
+
+	outFile, err := os.Create(out)
+	if err != nil {
+		panic(err)
+	}
+
+	dataBytes, err := os.ReadFile(dataOutput.Name())
+	if err != nil {
+		panic(err)
+	}
+
+	templateData.Me = string(dataBytes)
+	templateRoot.Execute(outFile, templateData)
+}
+
+func encodeStartTag(e *xml.Encoder, name string, attrs ...xml.Attr) error {
+	return e.EncodeToken(xml.StartElement{Name: xml.Name{Local: name}, Attr: attrs})
+}
+
+func encodeEndTag(e *xml.Encoder, name string) error {
+	return e.EncodeToken(xml.EndElement{Name: xml.Name{Local: name}})
+}
+
+func isProbablyImage(s string) bool {
+	lower := strings.ToLower(s)
+	return strings.HasSuffix(lower, ".png") ||
+		strings.HasSuffix(lower, ".jpg") ||
+		strings.HasSuffix(lower, ".jpeg") ||
+		strings.HasSuffix(lower, ".gif")
+}
+
+func isProbablyYouTube(s string) bool {
+	return strings.Contains(s, "youtube.com/embed")
+}
+
+func recursivePrint(node *parser.Node, depth int) {
+	fmt.Println(strings.Repeat("  ", depth), node.Content)
+	for _, child := range node.Children {
+		recursivePrint(child, depth+1)
+	}
+}
+
+func getNodeSummary(node *parser.Node) string {
+	if node.BlockType == parser.BlockPreformatted {
+		// return first 30 characters
+		if len(node.Content) > 30 {
+			return fmt.Sprintf("`code` %s...", node.Content[:30])
+		}
+
+		return node.Content
+	}
+
+	return node.Content
+}
+
+func changeDepth(node *parser.Node, newDepth int) {
+	node.Depth = newDepth
+	for _, child := range node.Children {
+		changeDepth(child, newDepth+1)
+	}
+}
+
+func updateSiteDataSourceCode() {
+	siteTxt, err := os.Open(siteData)
+	if err != nil {
+		panic(err)
+	}
+
+	root := parser.Parse(siteTxt)
+	siteTxt.Close()
+	sourceCodeNode, err := root.FindNode("source code")
+	if err != nil {
+		panic(err)
+	}
+
+	listRenderer := renderers.NewListRenderer()
+
+	// render first without the new code to avoid dupes in me.txt when reading below
+	sourceCodeNode.Children = []*parser.Node{}
+	siteTxt, err = os.Create(siteData)
+	if err != nil {
+		panic(err)
+	}
+	listRenderer.Render(root, siteTxt)
+	siteTxt.Close()
+
+	daNode := parser.ParseFileTree(".", []string{".go"}, []string{"me.txt", "me.tmpl.html"})
+	// since this is getting moved into a subtree, we need to change the depth of the node
+	changeDepth(daNode, sourceCodeNode.Depth+1)
+	// since parsefiletree returns a root (and we already have one in the tree we're editing) we need to append the children
+	sourceCodeNode.Children = append(sourceCodeNode.Children, daNode.Children...)
+	for _, child := range daNode.Children {
+		child.Parent = sourceCodeNode
+	}
+
+	siteTxt, err = os.Create(siteData)
+	if err != nil {
+		panic(err)
+	}
+	listRenderer.Render(root, siteTxt)
+	siteTxt.Close()
+}
+
+```
+  - monitors
+   - monitor.go
+    - ``` package monitors
+
+import (
+	"os"
+	"time"
+)
+
+type FileMonitor struct {
+	// tbh this should probably emit a single event with all the files that changed instead
+	Changed   chan string
+	fileStats map[string]os.FileInfo
+}
+
+func NewFileMonitor(filePaths []string) (*FileMonitor, error) {
+	fileStats := make(map[string]os.FileInfo)
+	m := &FileMonitor{
+		fileStats: fileStats,
+		Changed:   make(chan string),
+	}
+
+	for _, filePath := range filePaths {
+		stat, err := os.Stat(filePath)
+		if err != nil {
+			return nil, err
+		}
+
+		m.fileStats[filePath] = stat
+	}
+
+	go m.watch()
+
+	return m, nil
+}
+
+func (m *FileMonitor) AddFile(filePath string) error {
+	stat, err := os.Stat(filePath)
+	if err != nil {
+		return err
+	}
+	m.fileStats[filePath] = stat
+	m.Changed <- filePath
+	return nil
+}
+
+func (m *FileMonitor) watch() {
+	ticker := time.NewTicker(2 * time.Second)
+	defer ticker.Stop()
+
+	m.Changed <- "init"
+
+	for range ticker.C {
+		m.checkFiles()
+	}
+}
+
+func (m *FileMonitor) checkFiles() {
+	fileChanged := false
+	for filePath, stat := range m.fileStats {
+		newStat, err := os.Stat(filePath)
+		if err != nil {
+			continue
+		}
+
+		if newStat.Size() != stat.Size() || newStat.ModTime() != stat.ModTime() {
+			fileChanged = true
+			m.fileStats[filePath] = newStat
+		}
+	}
+
+	if fileChanged {
+		m.Changed <- "file"
+	}
+}
+
+```
+  - parsers
+   - fileTreeParser.go
+    - ``` package parser
+
+import (
+	"fmt"
+	"os"
+	"path/filepath"
+	"slices"
+	"strings"
+)
+
+func ParseFileTree(codeDir string, fileTypes []string, additionalFilePaths []string) *Node {
+	root := &Node{ID: "root", Depth: -1, Content: "root", Parent: nil, Children: []*Node{}}
+	fmt.Println(root)
+	codeFiles := []string{}
+	err := filepath.Walk(codeDir, func(path string, info os.FileInfo, err error) error {
+		if err != nil {
+			return err
+		}
+
+		if !info.IsDir() && slices.Contains(fileTypes, filepath.Ext(path)) {
+			completeNode(path, root)
+			codeFiles = append(codeFiles, path)
+		}
+
+		return nil
+	})
+
+	if err != nil {
+		panic(err)
+	}
+
+	for _, path := range additionalFilePaths {
+		completeNode(path, root)
+	}
+
+	return root
+}
+
+func completeNode(path string, root *Node) {
+	fmt.Println("Doing path", path)
+	parts := strings.Split(path, "/")
+
+	currentNode := root
+	currentDepth := 0
+	for _, part := range parts {
+		for _, child := range currentNode.Children {
+			if child.Content == part {
+				currentNode = child
+				currentDepth++
+				break
+			}
+		}
+
+		// doesn't already exist, create it
+		fmt.Println("Creating", part)
+		newNode := &Node{
+			Depth:     currentDepth,
+			Content:   part,
+			BlockType: BlockText,
+			Parent:    currentNode,
+			Children:  []*Node{},
+			ID:        "",
+		}
+		currentNode.Children = append(currentNode.Children, newNode)
+
+		// if this is the last part in path, add the code
+		if part == parts[len(parts)-1] {
+			addCodeNode(newNode, path, currentDepth)
+		}
+
+		currentNode = currentNode.Children[len(currentNode.Children)-1]
+		currentDepth++
+	}
+}
+
+func addCodeNode(parent *Node, path string, currentDepth int) {
+	// read the file and parse it
+	code, err := os.ReadFile(path)
+	if err != nil {
+		panic(err)
+	}
+
+	codeStr := string(code)
+	parent.Children = append(parent.Children, &Node{
+		Depth:     currentDepth + 1,
+		Content:   codeStr,
+		BlockType: BlockPreformatted,
+		Parent:    parent,
+		Children:  []*Node{},
+		ID:        "",
+	})
+}
+
+```
+   - parsers
+    - parser.go
+     - ``` package parser
+
+import (
+	"bufio"
+	"crypto/sha256"
+	"encoding/hex"
+	"fmt"
+	"io"
+	"strconv"
+	"strings"
+)
+
+const (
+	BlockRoot = iota
+	BlockText
+	BlockPreformatted
+	BlockHeader
+	BlockPage
+	BlockLink
+	BlockQuote
+)
+
+type BlockType int
+
+var AllBlockTypes = [...]BlockType{
+	BlockRoot,
+	BlockText,
+	BlockPreformatted,
+	BlockHeader,
+	BlockPage,
+	BlockLink,
+	BlockQuote,
+}
+
+var RenderableBlockTypes = [...]BlockType{
+	BlockText,
+	BlockPreformatted,
+	BlockHeader,
+	BlockPage,
+	BlockLink,
+	BlockQuote,
+}
+
+type blockSpec struct {
+	BlockType BlockType
+	Token     string
+	Name      string
+}
+
+var blockTypeToString = map[BlockType]blockSpec{
+	BlockRoot: {
+		BlockType: BlockRoot,
+		Token:     "__root__",
+		Name:      "Root",
+	},
+	BlockText: {
+		BlockType: BlockText,
+		Token:     "",
+		Name:      "Text",
+	},
+	BlockPreformatted: {
+		BlockType: BlockPreformatted,
+		Token:     "\`\`\`",
+		Name:      "Preformatted",
+	},
+	BlockHeader: {
+		BlockType: BlockHeader,
+		Token:     "#",
+		Name:      "Header",
+	},
+	BlockPage: {
+		BlockType: BlockPage,
+		Token:     "$",
+		Name:      "Page",
+	},
+	BlockLink: {
+		BlockType: BlockLink,
+		Token:     "=>",
+		Name:      "Link",
+	},
+	BlockQuote: {
+		BlockType: BlockQuote,
+		Token:     ">",
+		Name:      "Quote",
+	},
+}
+
+func (blockType BlockType) Name() string {
+	if spec, ok := blockTypeToString[blockType]; ok {
+		return spec.Name
+	}
+	panic("Unknown block type: " + strconv.Itoa(int(blockType)))
+}
+
+func (blockType BlockType) Token() string {
+	if spec, ok := blockTypeToString[blockType]; ok {
+		return spec.Token
+	}
+	panic("Unknown block type: " + strconv.Itoa(int(blockType)))
+}
+
+type Node struct {
+	Depth     int
+	Content   string
+	BlockType BlockType
+	Parent    *Node
+	Children  []*Node
+	ID        string
+}
+
+const (
+	ParseNormal = iota
+	ParsePreFormatted
+)
+
+// const fileName = "me.txt"
+const fileName = "test.txt"
+
+func Parse(content io.Reader) *Node {
+	scanner := bufio.NewScanner(content)
+
+	currentMode := ParseNormal
+	rootNode := &Node{ID: "root", Depth: -1, Content: "root", Parent: nil, Children: []*Node{}}
+	currentNode := rootNode
+	currentLine := 0
+	for scanner.Scan() {
+		currentLine++
+		lineData := scanner.Text()
+
+		switch currentMode {
+		case ParseNormal:
+			charIndex := 0
+			for charIndex < len(lineData) && lineData[charIndex] == ' ' {
+				charIndex++
+			}
+			spaceCount := charIndex
+
+			if charIndex == len(lineData) {
+				continue
+			}
+
+			if lineData[charIndex] != '-' {
+				panicWith(currentNode, "Expected '-' at line "+strconv.Itoa(currentLine)+" char "+strconv.Itoa(charIndex)+" but got "+string(lineData[charIndex]))
+			}
+
+			remainingData := strings.TrimLeft(lineData[charIndex+1:], " ")
+			blockType, blockContent := getBlock(remainingData)
+
+			// walk up the tree until we find a parent with smaller depth
+			parentNode := currentNode
+			for parentNode != nil && parentNode.Depth >= spaceCount {
+				parentNode = parentNode.Parent
+			}
+
+			if parentNode == nil {
+				panicWith(rootNode, "No parent found for line "+strconv.Itoa(currentLine))
+			}
+
+			newNode := &Node{Depth: spaceCount, Content: blockContent, BlockType: blockType, Parent: currentNode, Children: []*Node{}}
+			newNode.updateID()
+			newNode.Parent = parentNode
+			parentNode.Children = append(parentNode.Children, newNode)
+			currentNode = newNode
+
+			if blockType == BlockPreformatted {
+				currentMode = ParsePreFormatted
+			}
+
+		case ParsePreFormatted:
+			if hasPrefix(lineData, "\`\`\`") {
+				currentMode = ParseNormal
+				continue
+			} else {
+				if currentNode.Content == "" {
+					currentNode.Content = lineData
+				} else {
+					currentNode.Content += "\n" + lineData
+				}
+			}
+		}
+	}
+
+	if err := scanner.Err(); err != nil {
+		panic(err)
+	}
+
+	return rootNode
+}
+
+func (node *Node) String() string {
+	return fmt.Sprintf("[%s]%s", node.BlockType.Name(), node.Content)
+}
+
+func (node *Node) FindNode(content string) (*Node, error) {
+	if node.Content == content {
+		return node, nil
+	}
+
+	for _, child := range node.Children {
+		foundNode, err := child.FindNode(content)
+		if err == nil {
+			return foundNode, nil
+		}
+	}
+
+	return nil, fmt.Errorf("Node with content \"%s\" not found", content)
+}
+
+func (node *Node) updateID() {
+	node.ID = hashString(node.Content)
+}
+
+func hasPrefix(s, prefix string) bool {
+	return strings.HasPrefix(s, prefix)
+	// return len(s) >= len(prefix) && s[:len(prefix)] == prefix
+}
+
+func getBlock(data string) (blockType BlockType, blockContent string) {
+	switch {
+	case hasPrefix(data, "\`\`\`"):
+		return BlockPreformatted, data[3:]
+	case hasPrefix(data, "#"):
+		return BlockHeader, strings.TrimLeft(data[1:], " ")
+	case hasPrefix(data, "=>"):
+		return BlockLink, strings.TrimLeft(data[2:], " ")
+	case hasPrefix(data, "$"):
+		return BlockPage, strings.TrimLeft(data[1:], " ")
+	case hasPrefix(data, ">"):
+		return BlockQuote, strings.TrimLeft(data[1:], " ")
+	default:
+		return BlockText, data
+	}
+}
+
+func panicWith(lastNode *Node, message string) {
+	panic("Last Node: " + lastNode.String() + "\n" + message)
+}
+
+func hashString(input string) string {
+	hasher := sha256.New()
+	hasher.Write([]byte(input))
+	hashBytes := hasher.Sum(nil)
+	return hex.EncodeToString(hashBytes)
+}
+
+```
+  - renderers
+   - html.go
+    - ``` package renderers
+
+import (
+	"encoding/xml"
+
+	parser "github.com/macintoshpie/listwebsite/parsers"
+)
+
+func NewUlRenderer(node *parser.Node) *XMLRenderer {
+	return &XMLRenderer{
+		root: newXMLRendererNode(node, ulEncoder),
+	}
+}
+
+func NewDetailsRenderer(node *parser.Node) *XMLRenderer {
+	return &XMLRenderer{
+		root: newXMLRendererNode(node, detailsEncoder),
+	}
+}
+
+func detailsEncoder(node *xmlRendererNode, e *xml.Encoder, start xml.StartElement) error {
+	if node.BlockType != parser.BlockRoot {
+		// set the name of the custom xml element
+		start.Name.Local = "details"
+		err := e.EncodeToken(start)
+		if err != nil {
+			return err
+		}
+
+		defer func() {
+			// close the custom xml element
+			err := e.EncodeToken(xml.EndElement{Name: start.Name})
+			if err != nil {
+				panic(err)
+			}
+		}()
+
+		// encode summary
+		err = e.EncodeElement(node.Content, xml.StartElement{Name: xml.Name{Local: "summary"}})
+		if err != nil {
+			return err
+		}
+	}
+
+	// encode children, if any
+	for _, child := range node.Children {
+		// Recursively call MarshalXML on each child
+		err := e.EncodeElement(child, xml.StartElement{Name: xml.Name{Local: "placeholder"}})
+		if err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
+func ulEncoder(node *xmlRendererNode, e *xml.Encoder, start xml.StartElement) error {
+	if node.BlockType == parser.BlockRoot {
+		// set the name of the custom xml element
+		start.Name.Local = "ul"
+		err := e.EncodeToken(start)
+		if err != nil {
+			return err
+		}
+
+		// encode children, if any
+		for _, child := range node.Children {
+			// Recursively call MarshalXML on each child
+			err := e.EncodeElement(child, xml.StartElement{Name: xml.Name{Local: "placeholder"}})
+			if err != nil {
+				return err
+			}
+		}
+
+		err = e.EncodeToken(xml.EndElement{Name: start.Name})
+		return err
+	} else {
+		// set the name of the custom xml element
+		start.Name.Local = "li"
+		err := e.EncodeToken(start)
+		if err != nil {
+			return err
+		}
+
+		err = e.EncodeToken(xml.CharData(node.Content))
+		if err != nil {
+			return err
+		}
+
+		if len(node.Children) > 0 {
+			err = e.EncodeToken(xml.StartElement{Name: xml.Name{Local: "ul"}})
+			if err != nil {
+				return err
+			}
+
+			for _, child := range node.Children {
+				// Recursively call MarshalXML on each child
+				err := e.EncodeElement(child, xml.StartElement{Name: xml.Name{Local: "placeholder"}})
+				if err != nil {
+					return err
+				}
+			}
+
+			err = e.EncodeToken(xml.EndElement{Name: xml.Name{Local: "ul"}})
+			if err != nil {
+				return err
+			}
+		}
+
+		err = e.EncodeToken(xml.EndElement{Name: start.Name})
+		return err
+	}
+}
+
+```
+   - renderers
+    - list.go
+     - ``` package renderers
+
+import (
+	"io"
+	"strings"
+
+	parser "github.com/macintoshpie/listwebsite/parsers"
+)
+
+type ListRenderer struct {
+	indentation  string
+	delim        string
+	tokenPadding string
+}
+
+func NewListRenderer() *ListRenderer {
+	return &ListRenderer{
+		indentation:  " ",
+		delim:        "-",
+		tokenPadding: " ",
+	}
+}
+
+func (lr *ListRenderer) WithIndentation(indentation string) *ListRenderer {
+	lr.indentation = indentation
+	return lr
+}
+
+func (lr *ListRenderer) WithDelim(delim string) *ListRenderer {
+	lr.delim = delim
+	return lr
+}
+
+func (lr *ListRenderer) WithTokenPadding(tokenPadding string) *ListRenderer {
+	lr.tokenPadding = tokenPadding
+	return lr
+}
+
+func (lr *ListRenderer) Render(node *parser.Node, o io.Writer) {
+	if node.BlockType != parser.BlockRoot {
+		o.Write([]byte(strings.Repeat(lr.indentation, node.Depth)))
+		o.Write([]byte(lr.delim))
+		o.Write([]byte(lr.tokenPadding))
+		if node.BlockType.Token() != "" {
+			o.Write([]byte(node.BlockType.Token()))
+			o.Write([]byte(lr.tokenPadding))
+		}
+		// escape the content
+		content := strings.ReplaceAll(node.Content, "\`\`\`", "\\`\\`\\`")
+		o.Write([]byte(content + "\n"))
+
+		if node.BlockType == parser.BlockPreformatted {
+			o.Write([]byte("\`\`\`\n"))
+		}
+	}
+
+	for _, child := range node.Children {
+		lr.Render(child, o)
+	}
+}
+
+```
+   - renderers
+    - renderer.go
+     - ``` package renderers
+
+import (
+	"io"
+
+	parser "github.com/macintoshpie/listwebsite/parsers"
+)
+
+type Renderer interface {
+	Render(node *parser.Node, o io.Writer)
+}
+
+```
+   - renderers
+    - xml.go
+     - ``` package renderers
+
+import (
+	"encoding/xml"
+	"io"
+
+	parser "github.com/macintoshpie/listwebsite/parsers"
+)
+
+// NewXmlRenderer creates a new XMLRenderer with the given parser.Node as the root
+func NewXmlRenderer(node *parser.Node) *XMLRenderer {
+	return &XMLRenderer{
+		root: newXMLRendererNode(node, simpleXmlEncoder),
+	}
+}
+
+// SetXmlEncoder sets the encoder function for the given node and all of its children
+func SetXmlEncoder(node *xmlRendererNode, encoderFunc EncoderFunc) {
+	node.encoderFunc = encoderFunc
+
+	for _, child := range node.Children {
+		SetXmlEncoder(child, encoderFunc)
+	}
+}
+
+type XMLRenderer struct {
+	root *xmlRendererNode
+}
+
+func (xr *XMLRenderer) Render(o io.Writer) {
+	xmlResult, err := xml.MarshalIndent(xr.root, "", "  ")
+	if err != nil {
+		panic(err)
+	}
+
+	o.Write(xmlResult)
+}
+
+type EncoderFunc func(node *xmlRendererNode, e *xml.Encoder, start xml.StartElement) error
+
+// xmlRendererNode is a struct that represents a node that can be rendered to XML
+// I tried using embedding to avoid recreating nodes, but the Renderer would end up using the parser.Node struct's Renderer instead...
+type xmlRendererNode struct {
+	BlockType   parser.BlockType
+	Content     string
+	Children    []*xmlRendererNode
+	encoderFunc EncoderFunc
+}
+
+func (nm *xmlRendererNode) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	return nm.encoderFunc(nm, e, start)
+}
+
+// newXMLRendererNode recursively creates a new XMLRendererNode tree from a parser.Node tree
+func newXMLRendererNode(node *parser.Node, encoderFunc EncoderFunc) *xmlRendererNode {
+	nm := &xmlRendererNode{
+		BlockType:   node.BlockType,
+		Content:     node.Content,
+		encoderFunc: encoderFunc,
+	}
+	for _, child := range node.Children {
+		nm.Children = append(nm.Children, newXMLRendererNode(child, encoderFunc))
+	}
+	return nm
+}
+
+func simpleXmlEncoder(node *xmlRendererNode, e *xml.Encoder, start xml.StartElement) error {
+	start.Name.Local = node.BlockType.Name()
+	err := e.EncodeToken(start)
+	if err != nil {
+		return err
+	}
+
+	err = e.EncodeToken(xml.CharData(node.Content))
+	if err != nil {
+		return err
+	}
+
+	for _, child := range node.Children {
+		err = e.EncodeElement(child, xml.StartElement{Name: xml.Name{Local: "placeholder"}})
+		if err != nil {
+			return err
+		}
+	}
+
+	err = e.EncodeToken(xml.EndElement{Name: start.Name})
+	return err
+}
+
+```
+  - walkers
+   - walker.go
+    - ``` package walkers
+
+import parser "github.com/macintoshpie/listwebsite/parsers"
+
+type ListenerCallback func(node *parser.Node)
+
+type ListenerConfig struct {
+	OnEnter ListenerCallback
+	OnExit  ListenerCallback
+}
+
+type Walker struct {
+	listenerConfigs map[parser.BlockType][]ListenerConfig
+}
+
+func NewWalker() *Walker {
+	return &Walker{
+		listenerConfigs: make(map[parser.BlockType][]ListenerConfig),
+	}
+}
+
+func (lr *Walker) AddEventListener(blockTypes []parser.BlockType, listener ListenerConfig) {
+	for _, blockType := range blockTypes {
+		lr.listenerConfigs[blockType] = append(lr.listenerConfigs[blockType], listener)
+	}
+}
+
+func (lr *Walker) Walk(node *parser.Node) {
+	listenerConfigs, ok := lr.listenerConfigs[node.BlockType]
+
+	if ok {
+		for _, listenerConfig := range listenerConfigs {
+			if listenerConfig.OnEnter == nil {
+				continue
+			}
+
+			listenerConfig.OnEnter(node)
+		}
+	}
+
+	for _, child := range node.Children {
+		lr.Walk(child)
+	}
+
+	if ok {
+		for _, listenerConfig := range listenerConfigs {
+			if listenerConfig.OnExit == nil {
+				continue
+			}
+
+			listenerConfig.OnExit(node)
+		}
+	}
+}
+
+```
+  - me.txt
+   - ``` - Ted Summer
+  - => /images/me-circle.png
+  - things I like 🍓
+    - music
+      - => https://www.youtube.com/embed/liS_be9MK00
+      - I have a microkorg and make music in Ableton. Amateur pianist.
+        - => /images/cruella.png
+      - => https://www.youtube.com/embed/4An4oR035j8
+    - climbing
+    - biking
+      - I'm into 90s mountain bikes right now. I have a '93 raleigh m-40 currently
+      - => /images/my-raleigh.png
+    - hyperlinks
+      - => https://100r.co/
+      - => http://www.musanim.com/all/
+      - => https://mollysoda.exposed/
+      - => http://www.beerxml.com/
+    - css
+      - just kidding i have no idea how to use it properly
+- sometimes I make things
+  - this website (lists version)
+    - This website is written as a single file as a big list
+      - roughly follows syntax follows gemini gemfile format. will probably move further away from it as I go because its mine
+    - tests
+      - \`\`\`           // code formatting
+def hello():
+  print("world!")
+
+foo = 1 + 2.3
+
+{
+  "foo": {
+    "bar": [1, 2, 3, "four"],
+  },
+  "yes": false,
+}
+\`\`\`
+    - todos
+      - truncate all section headers, at x chars, then show full on hover. might need special consideration for mobile though b/c I think tap results in persistent hover
+        - \`\`\`           .truncate {
+  display: inline-block;
+  width: 20ch; /* change 20 to the desired character limit */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+\`\`\`
+      - fix text overflow for code. maybe do scrollable on overflow-x
+      - generate nodes using code files e.g. codeFilesRoot := parser.ParseFileTree(".", []string{".go"}, []string{"me.txt", "me.tmpl.html"})
+  - tombola: generative music
+    - Inspired by Teenage Engineering OP-1's tombola sequencer.
+    - => https://tombola.tedsummer.com/
+    - => /images/tombola.png
+  - liztz: notes as lists
+    - A lightweight note taking application centered around lists.
+    - => /images/liztz.png
+  - tasks: timeline estimation
+    - A timeline estimator for multiple tasks. Uses Monte Carlo simulations to estimate when a collection of tasks will be complete. Mostly an exercise in creating fluid UI/UX.
+    - => /images/tasks.png
+    - => https://en.wikipedia.org/wiki/Monte_Carlo_method#An_example
+  - => https://actionsbyexample.com
+    - GitHub Actions by Example is an introduction to GitHub’s Actions and Workflows through annotated example YAML files. I wrote a custom HTML generator in Golang to generate the documentation from YAML files.
+    - => /images/actionsbyexample.png
+  - mixtapexyz
+    - A game where players build themed music playlists with friends. Had some fun writing a custom router in Golang.
+    - => https://www.mxtp.xyz/
+    - => /images/mxtp.png
+  - convoh
+    - chat with yourself
+    - => https://convoh.netlify.app
+    - => /images/convoh.png
+  - freedb.me
+    - free sqlite databases. queried through HTTP API. hand made with go
+    - https://freedb.me
+    - => /images/freedb.png
+  - jot
+    - Post-it notes and scheduled reminders app.
+    - https://jot.tedsummer.com
+    - => /images/jot.png
+  - paropt: tool optimization automation
+    - => https://github.com/macintoshpie/paropt
+    - => /images/paropt.png
+    - => https://ieeexplore.ieee.org/abstract/document/8968866
+  - pixel synth
+    - Pixel-based video synthesizer in HTML/JS
+    - => /images/pixsynth.png
+  - maze solving twitter bot
+    - Twitter bot which solves another Twitter bot’s ASCII mazes. Looks like it's banned now. thanks elon ®
+    - => /images/minimazesolver.png
+  - pentaku js
+    - Play against a friend or naive bots in pentago, gomoku, and other grid based games.
+    - => /images/pentaku.png
+- sometimes I write
+  - $ shorts
+    - perl should have used the keyword "my" for constants and "our" for variables
+      - \`\`\`           my $NAME = "ted";
+our @shared_friends = ("alice", "bob", "charlie");
+\`\`\`
+      - it also should have used camel case
+  - $ linoleum
+    - I wanted to make some prints on hats for a "running party" we were having. A mouse dubbed [Mr. Jiggy](https://banjokazooie.fandom.com/wiki/Jiggy) lives (lived) with us, so I wanted him as a mascot on each teams hat. So I bought some linoleum, cheap ass tools, and speedball fabric ink off amazon.
+    - I found a chinese site that sells hat blanks, but I would not recommend it because the hats I received did not look like the advertised product. 1 star.
+    - => /images/jiggy.JPG
+    - > mr. jiggy lived in our dishwasher and while playing banjo kazooie after my roommate had a heatstroke we though it was really funny to name him that (her? we don't know).
+    - I asked Dall-E to generate some photos of linoleum mice as a starting place then handdrew a simplified version onto the linoleum.
+    - This worked out pretty well other than the fact that I probably made it slightly too small (~2x2 inches) and it was really hard to get the hair detail. Not much to say about the cutting. 
+    - => /images/jiggy-print.png
+    - I of course forgot that the print would be "in reverse" (flipped on horizontally) but who cares when it's a mouse. It would have been a problem if I stuck with the original plan of writing "stay sweaty" in Bosnian underneath but I scrapped that after our Bosnian friend began to explain the fact that Bosnian has gendered nouns and I didn't like the longer alternatives.
+    - Though I just did some googling/llming and found some cool bosnian bro speak like "živa legenda" (living legend) which would have been dope.
+    - => /images/amjo-brate-shirt.png
+    - > chatgpt tells me "ajmo brate" says "lets go bro" and I found this shirt on amazon (supposedly) saying "let's go bro, sit in the tavern, order, drink, and eat, let the eyes shine from the wine, we don't live for a thousand years" which is a sentiment I appreciate
+    - I rolled the ink on 4th of july paper plates that were too small. I will be looking for glass panes or something similar for rolling ink at the animal crossing store in future visits.
+    - I learned that I have no idea how much ink to use, and that you should put a solid thing behind whatever you're printing on (the mesh backing left a pattern in the first print). But it does seem cool to experiment printing with some patterned texture behind the print.
+    - I had been warned that nylon is a terrible fabric to print on but I did it anyways.
+    - It's still not fully dry after 12 hours but whatever. we'll see. it'll probably wash out.
+    - The first few hats looked ok. In future prints I'd like to try a few things:
+      - simpler design
+      - bigger design (~2.5 inches)
+      - trim off more of the excess linoleum when working with awkward printing surfaces
+    - => /images/jiggy-hats.png
+    - > the white print had way too much ink I think. The black print looks wonky because I printed without a solid surface behind the fabric (the mesh behind the hat came through).
+  - $ aws lambda: local server
+    - I've been messing around with a project which uses netlify and lambda (it's free and static sites are hawt). I basically have one main lambda function which handles api requests built in golang. It's pretty awesome how easy netlify lets you build and deploy, but I wanted to a nice local setup for building and testing my api server. I think aws has its own tooling for this, but I didn't really want to start fooling with it, so I came up with this.
+    - First, use a docker container docker-lambda to actually "run" the lambda. This is an awesome container, but you have to use the lambda API for interacting with the service. That's no good because our frontend shouldn't care about the lambda API, and it should just use the API gateway netlify uses for the functions.
+      - => https://github.com/lambci/docker-lambda
+    - To fix this, I created a small python proxy takes requests, converts them into API Gateway requests, forwards it to our docker container with the lambda, then converts the API Gateway response into a normal HTTP response. I _really_ struggled to get the python request handler to do all of the things I wanted, but eventually I got it working.
+    - Here's the full script I use to run the lambda as an HTTP API locally. Since I'm using golang I use the `go1.x` tag for the container and provide the path to the executable. Also, I ended up wrapping the python starting process in a loop b/c it was taking a while for the port to become available again after killing and restarting the script.
+      - \`\`\`           bash
+#! /bin/bash
+# Starts a a mock lambda server allowing you to make requests
+set -e
+
+# build my go executable
+make build
+
+docker rm -f lambda_service 2>&1 >/dev/null || true
+docker run -d --rm \
+    --name lambda_service \
+    -p 9001:9001 \
+    -e DOCKER_LAMBDA_STAY_OPEN=1 \
+    --env-file .env \
+    -v "$PWD":/var/task:ro,delegated \
+    # Change tag and path to executable as needed
+    lambci/lambda:go1.x ./bin/functions/jockey
+
+# start a proxy server that handles translating to and from APIGateway request/responses
+python3 -c '
+from http.server import BaseHTTPRequestHandler
+from http.client import parse_headers
+import socketserver
+from urllib.request import urlopen
+from json import dumps, loads
+import os
+import time
+
+PORT = 8000
+LAMBDA_PORT = int(os.getenv("LAMBDA_PORT", "9001"))
+
+class Proxy(BaseHTTPRequestHandler):
+    # change the function name as needed (my functions name is jockey)
+    lambda_endpoint = f"http://localhost:{LAMBDA_PORT}/2015-03-31/functions/jockey/invocations"
+    def proxy_it(self):
+        content_length = self.headers["Content-Length"]
+        data_string = ""
+        if content_length:
+            data_string = self.rfile.read(int(content_length)).decode()
+        constructed_request = {
+            "path": self.path,
+            "httpMethod": self.command,
+            "body": data_string,
+            "headers": {k: self.headers[k] for k in self.headers.keys()}
+        }
+        print("Sending Request: ", constructed_request)
+        response = urlopen(self.lambda_endpoint, dumps(constructed_request).encode())
+
+        body = response.read().decode()
+        http_response = loads(body)
+        print("\nGot Response: ", http_response)
+
+        headers = http_response.get("headers", {})
+        body = http_response["body"] if http_response.get("body") else ""
+        status_code = http_response.get("statusCode", 500)
+        self.send_response(status_code)
+        for header, value in headers.items():
+            self.send_header(header, value)
+        self.end_headers()
+        self.wfile.write(bytes(body, "utf-8"))
+
+    def do_GET(self):
+        self.proxy_it()
+
+    def do_POST(self):
+        self.proxy_it()
+
+    def do_OPTIONS(self):
+        self.proxy_it()
+
+started = False
+while not started:
+    try:
+        with socketserver.TCPServer(("", PORT), Proxy) as httpd:
+            started = True
+            print(f"Proxying from port {PORT} to {LAMBDA_PORT}")
+            httpd.serve_forever()
+    except:
+        print("Port still occupied, waiting...")
+        time.sleep(5)
+'
+\`\`\`
+    - This could probably be improved but it's worked so far for my toy project. One significant improvement to this process would be to have the docker container auto rebuild the function whenever it changes, but I've yet to add that.
+  - $ jq: looping
+    - Here's a quick example of using jq in a for loop. jq has some nice functional stuff built in such as `map()`, but sometimes you need to do some fancy stuff with the data. This might be useful when you've filtered a jq array, and then need to iterate over the objects to do some work that you can't do in jq alone.
+    - For this example, the goal is to iterate through an array of user objects, downloading their pictures. We'll use some fake user data from https://reqres.in/, you can download it with the script below
+      - script
+        - \`\`\`           bash
+curl https://reqres.in/api/users?page=1 > user_loop.json
+\`\`\`
+      - output
+        - \`\`\`           JSON
+{
+  "page": 1,
+  "per_page": 6,
+  "total": 12,
+  "total_pages": 2,
+  "data": [
+    {
+      "id": 1,
+      "email": "george.bluth@reqres.in",
+      "first_name": "George",
+      "last_name": "Bluth",
+      "avatar": "https://s3.amazonaws.com/uifaces/faces/twitter/calebogden/128.jpg"
+    },
+    {
+      "id": 2,
+      "email": "janet.weaver@reqres.in",
+      "first_name": "Janet",
+      "last_name": "Weaver",
+      "avatar": "https://s3.amazonaws.com/uifaces/faces/twitter/josephstein/128.jpg"
+    },
+    ...
+  ]
+}
+\`\`\`
+    - The finished result
+      - \`\`\`           bash
+imagesDir="tmp_user_images"
+mkdir -p $imagesDir
+
+while read -r user; do
+  avatarURL=$(echo $user | jq -r '.avatar')
+  imagePath="${imagesDir}/$(echo $user | jq -r '.first_name + .last_name').jpg"
+  echo "Downloading ${avatarURL} to ${imagePath}"
+  curl -s -o ${imagePath} ${avatarURL}
+done <<< "$(cat user_loop.json | jq -c '.data[]')"
+\`\`\`
+    - The part of interest (the looping), is written like this
+      - \`\`\`           bash
+while read -r user; do
+  # do work on user object
+done <<< "$(cat user_loop.json | jq -c '.data[]')"
+\`\`\`
+    - # # Breakdown
+      - # ## Get the objects
+        - First, we care only about the `data` array which stores our user objects containing the URLs, so we use that object id to access it:
+        - \`\`\`           bash
+cat user_loop.json | jq -c '.data[]'
+\`\`\`
+        - Notice `-c` flag, it's important for looping over the objects. This tells jq to put each object onto a single line, which we'll use in the loop.
+      - # ## Loop over lines
+        - In bash, we can loop over lines by using the `while read -r varName; do ...; done <<< "$lineSeparatedVar"` pattern. `read -r <name>` will read in a line from STDIN, then assign the value to `<name>`; the `-r` flag tells `read` "do not allow backslashes to escape any characters".  
+        - Now we can loop over objects from our array like so
+        - \`\`\`           bash
+while read -r user; do
+  # do work on user object
+done <<< "$(cat user_loop.json | jq -c '.data[]')"
+\`\`\`
+    - # # Notes
+      - I've not fully tested this code. You may want to base64 encode the objects, then decode them if you wanna be really safe.
+      - `curl` concurrently, toss a `&` on the end of the curl to run it as a background process
+  - jq: group, unique, average
+    - Recently I've been running through picoCTF 2018 and saw this problem that can be solved with some cool stuff from jq (a handy JSON processor for the command line).
+    - => https://2018game.picoctf.com/
+    - => https://stedolan.github.io/jq/
+    - Question: What is the number of unique destination IPs a file is sent to, on average?  
+      - A shortened version of the provided data, `incidents.json`, is below.
+        - \`\`\`           JSON
+{
+  "tickets": [
+    {
+      "ticket_id": 0,
+      "timestamp": "2017/06/10 07:50:14",
+      "file_hash": "fb0abe9b2a37e234",
+      "src_ip": "131.90.8.180",
+      "dst_ip": "104.97.128.21"
+    },
+    {
+      "ticket_id": 1,
+      "timestamp": "2017/06/11 05:19:56",
+      "file_hash": "f2d8740404ff1d55",
+      "src_ip": "187.100.149.54",
+      "dst_ip": "33.29.174.118"
+    },
+      ...
+    {
+      "ticket_id": 9,
+      "timestamp": "2015/12/10 17:28:48",
+      "file_hash": "cafc9c5ec7ebc133",
+      "src_ip": "210.205.230.140",
+      "dst_ip": "99.31.12.3"
+    }
+  ]
+}
+\`\`\`
+    - solution
+      - > Pipe it up, pipe it up, pipe it up, pipe it up  
+      - > Pipe it up, pipe it up, pipe it up, pipe it up  
+      - > - Migos, Pipe it up
+      - => https://www.youtube.com/watch?v=8g2KKGgK-0w
+      - In jq you just create an array of the number of unique destination IPs for each file hash, then calculate the average:
+        - \`\`\`           bash
+$ cat incidents.json \
+  | jq '[
+          .tickets
+          | group_by(.file_hash)[]
+          | unique_by(.dst_ip)
+          | length
+        ]
+        | add / length'
+\`\`\`
+        - jq accepts a JSON document as input, so first we `cat` our JSON data into jq. In jq, arrays and individual elements can be piped into other functions.
+    - # ## group_by
+      - The first step is pretty straight forward. We select `tickets` and group the objects the objects by their `.file_hash` attribute, giving us this:
+      - \`\`\`           bash
+$ cat incidents.json \
+  | jq '[
+          .tickets
+          | group_by(.file_hash)[]
+        ]'
+\`\`\`
+        - output:
+          - \`\`\`           JSON
+[
+  [
+    {
+      "ticket_id": 3,
+      "timestamp": "2017/08/14 18:02:17",
+      "file_hash": "1a03d0a86d991e91",
+      "src_ip": "122.231.138.129",
+      "dst_ip": "88.148.199.124"
+    }
+  ],
+  [
+    {
+      "ticket_id": 5,
+      "timestamp": "2015/08/17 20:48:14",
+      "file_hash": "43e10d21eb3f5dc8",
+      "src_ip": "210.205.230.140",
+      "dst_ip": "50.225.199.154"
+    },
+    {
+      "ticket_id": 7,
+      "timestamp": "2015/03/18 22:37:20",
+      "file_hash": "43e10d21eb3f5dc8",
+      "src_ip": "122.231.138.129",
+      "dst_ip": "209.104.88.119"
+    }
+  ],
+  ...
+  [
+    {
+      "ticket_id": 0,
+      "timestamp": "2017/06/10 07:50:14",
+      "file_hash": "fb0abe9b2a37e234",
+      "src_ip": "131.90.8.180",
+      "dst_ip": "104.97.128.21"
+    },
+    {
+      "ticket_id": 8,
+      "timestamp": "2015/07/08 17:11:17",
+      "file_hash": "fb0abe9b2a37e234",
+      "src_ip": "93.124.108.240",
+      "dst_ip": "33.29.174.118"
+    }
+  ]
+]
+\`\`\`
+    - # ## unique_by
+      - Next we find the objects with unique destination ips within each of these groups. I'm not sure how jq decides which object to select from a group that share a value, but it doesn't matter for our purposes.
+        - \`\`\`           bash
+      $ cat incidents.json \
+        | jq '[
+                .tickets
+                | group_by(.file_hash)[]
+                | unique_by(.dst_ip)
+              ]'
+      \`\`\`
+      - output:
+        - \`\`\`JSON
+[
+  [
+    {
+      "ticket_id": 3,
+      "timestamp": "2017/08/14 18:02:17",
+      "file_hash": "1a03d0a86d991e91",
+      "src_ip": "122.231.138.129",
+      "dst_ip": "88.148.199.124"
+    }
+  ],
+  [
+    {
+      "ticket_id": 7,
+      "timestamp": "2015/03/18 22:37:20",
+      "file_hash": "43e10d21eb3f5dc8",
+      "src_ip": "122.231.138.129",
+      "dst_ip": "209.104.88.119"
+    },
+    {
+      "ticket_id": 5,
+      "timestamp": "2015/08/17 20:48:14",
+      "file_hash": "43e10d21eb3f5dc8",
+      "src_ip": "210.205.230.140",
+      "dst_ip": "50.225.199.154"
+    }
+  ],
+  ...
+  [
+    {
+      "ticket_id": 0,
+      "timestamp": "2017/06/10 07:50:14",
+      "file_hash": "fb0abe9b2a37e234",
+      "src_ip": "131.90.8.180",
+      "dst_ip": "104.97.128.21"
+    },
+    {
+      "ticket_id": 8,
+      "timestamp": "2015/07/08 17:11:17",
+      "file_hash": "fb0abe9b2a37e234",
+      "src_ip": "93.124.108.240",
+      "dst_ip": "33.29.174.118"
+    }
+  ]
+]
+\`\`\`
+    - # ## length
+      - Then we get the number of objects in each group
+        - \`\`\`           bash
+$ cat incidents.json \
+  | jq '[
+          .tickets
+          | group_by(.file_hash)[]
+          | unique_by(.dst_ip)
+          | length
+        ]'
+\`\`\`
+      - output:
+        - \`\`\`           JSON
+[
+  1,
+  2,
+  1,
+  1,
+  1,
+  2,
+  2
+]
+\`\`\`
+    - # ## add / length
+      - Then you can just pipe that array into `add / length` to calculate the average for the array
+        - \`\`\`           bash
+$ cat incidents.json \
+  | jq '[
+          .tickets
+          | group_by(.file_hash)[]
+          | unique_by(.dst_ip)
+          | length
+        ]
+        | add / length'
+\`\`\`
+      - output:
+        - \`\`\`           JSON
+1.4285714285714286
+\`\`\`
+- sometimes I talk
+  - server-sent events
+    - A brief introduction to server-sent events, when to use them and when not to use them.
+    - => /images/sse.png
+    - => https://docs.google.com/presentation/d/1i2vT6nMrRUsmFusH8HL-0fHZUEifyniL_8q0f0pBCBg/edit?usp=sharing
+  - schematron
+    - Introduction to Schematron, a language for validating XML documents.
+    - => /images/schematron.png
+    - => https://docs.google.com/presentation/d/16wpjtIqwqj0yagdQcObRzdDI6l_gYxCX/edit?usp=sharing&ouid=111583935946353067252&rtpof=true&sd=true
+- $ resume
+  - education
+    - M.S. in computer science
+      - University of Chicago, 3.9 / 4.0, 2018-2019
+      - Algorithms, C Programming, Operating Systems, Networks, Parallel Programming, Big Data, Application Security, Intro to Computer Systems, Discrete Math
+    - B.S. double major neuroscience & chinese studies
+      - Furman University, 3.48 / 4.0, 2012-2016
+  - work experience
+    - Replit, senior software engineer
+      - February 2022 - September 2024
+      - Bringing the the next billion software creators online.
+    - Devetry, senior software engineer
+      - February 2022 - September 2024
+        - Solving complex problems for clients with custom software and codebase improvements (Python, Django, Golang, JavaScript, XML Schema, PHP)
+        - Tech lead for the rebuilding of the Devetry website (Netlify, React)
+    - University of Chicago - Globus Labs, graduate practicum student
+      - January 2019 - June 2019
+      - Created Python package which automates the process of deploying, running, and optimizing arbitrary programs
+      - Used Bayesian Optimization to significantly reduce the amount of time required optimize tool configuration
+      - Created RESTful web service for running jobs with the package on AWS and storing results using Flask, Redis, Docker Compose and PostgreSQL
+    - University of Chicago - Center for Translational Data Science, software developer
+      - May 2018 - May 2019
+      - Used Node.js, Groovy, Bash, and Docker to develop tools and automation for Kubernetes management and CI/CD pipelines in Jenkins
+      - Created custom canary rollout method using Kubernetes, JavaScript, and NGINX
+    - NORC, graduate research assistant II, software developer
+      - Refactored, enhanced, and fixed previous bugs in Django web application backend
+      - Designed and created a custom survey frontend using vanilla JavaScript, primarily targeted at mobile use
+      - Created tools and statistical analysis reports on data collected through the platform using Pandas
+    - Furman University, lab coordinator
+      - June 2016 - July 2017
+      - Created data processing pipelines for organizing, cleaning, and merging eye tracking, EEG and behavioral data using Jupyter notebooks, Pandas, Numpy, and matplotlib
+      - Created an embedded database application in Java with functional GUI for more effective recruitment
+  - tools and such
+    - watever
+- source code
+- contact me
+  - => mailto:ted.summer2@gmail.com
+  - => https://github.com/macintoshpie
+  - => https://twitter.com/macint0shpie
+  - => https://linkedin.com/in/tedsummer
+
+```
+  - me.tmpl.html
+   - ``` <!DOCTYPE html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Ted Summer</title>
+    <link rel="icon" href="/images/strawberry.svg" type="image/svg+xml" />
+    <style>
+        :root {
+            --accent-color: #8ED081;
+            --border-radius: 16px;
+            --border-width: 2px;
+            --radius: 2px;
+        }
+
+        body {
+            margin: 0;
+            background-color: #fae7ff;
+            background-image: radial-gradient(#000000 1.5px, transparent 0);
+            background-size: 32px 32px;
+            background-position: 0px 0px;
+            background-attachment: fixed;
+
+            width: 100vw;
+            height: 100vh;
+
+            cursor: nwse-resize;
+        }
+
+        a {
+            color: #0000ff;
+        }
+
+        details {
+            display: inline;
+            vertical-align: top;
+
+            font:
+                16px "FreeMono",
+                monospace;
+            margin: 8px;
+
+            background: rgba(255, 255, 255, 0.557);
+            border-radius: var(--border-radius);
+            box-shadow: -5px 5px 5px rgba(0, 0, 0, 0.1);
+
+            max-width: 600px;
+
+            transition: transform 0.3s ease,
+                box-shadow 0.3s ease;
+        }
+
+        details:hover {
+            transform: translateY(-3px);
+            box-shadow: -7px 7px 7px rgba(0, 0, 0, 0.1) !important;
+        }
+
+        details[open] {
+            box-shadow: -6px 6px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        details:not([open]):hover {
+            animation: moveCounterClockwise 2.5s linear infinite;
+        }
+
+        details>summary {
+            border: var(--border-width) solid rgba(255, 255, 255, 0);
+            border-radius: var(--border-radius);
+            padding: 8px;
+        }
+
+        details:not([open])>summary:hover {
+            border: var(--border-width) solid rgb(0, 0, 0);
+        }
+
+        details[open]>summary {
+            border: none;
+
+            cursor: nw-resize;
+            background-color: var(--accent-color);
+            position: sticky;
+            top: 8px;
+        }
+
+        details:not([open])>summary {
+            cursor: se-resize;
+        }
+
+        details:not([open])>summary:focus-within {
+            border: var(--border-width) solid var(--accent-color);
+        }
+
+        img {
+            display: block;
+            margin: auto;
+            max-width: 400px;
+            border-radius: var(--border-radius);
+        }
+
+        iframe {
+            display: block;
+            margin: auto;
+            max-width: 400px;
+        }
 
 
+        #sillyCss {
+            animation: ohno 1s linear infinite;
+        }
+
+        @keyframes moveCounterClockwise {
+            0% {
+                transform: translate(calc(var(--radius) * 1), calc(var(--radius) * 0));
+            }
+
+            12.5% {
+                transform: translate(calc(var(--radius) * 0.707), calc(var(--radius) * -0.707));
+            }
+
+            25% {
+                transform: translate(calc(var(--radius) * 0), calc(var(--radius) * -1));
+            }
+
+            37.5% {
+                transform: translate(calc(var(--radius) * -0.707), calc(var(--radius) * -0.707));
+            }
+
+            50% {
+                transform: translate(calc(var(--radius) * -1), calc(var(--radius) * 0));
+            }
+
+            62.5% {
+                transform: translate(calc(var(--radius) * -0.707), calc(var(--radius) * 0.707));
+            }
+
+            75% {
+                transform: translate(calc(var(--radius) * 0), calc(var(--radius) * 1));
+            }
+
+            87.5% {
+                transform: translate(calc(var(--radius) * 0.707), calc(var(--radius) * 0.707));
+            }
+
+            100% {
+                transform: translate(calc(var(--radius) * 1), calc(var(--radius) * 0));
+            }
+        }
+
+        @keyframes ohno {
+            0% {
+                cursor: alias;
+            }
+
+            3% {
+                cursor: all-scroll;
+            }
+
+            6% {
+                cursor: auto;
+            }
+
+            9% {
+                cursor: cell;
+            }
+
+            11% {
+                cursor: col-resize;
+            }
+
+            14% {
+                cursor: context-menu;
+            }
+
+            17% {
+                cursor: copy;
+            }
+
+            20% {
+                cursor: crosshair;
+            }
+
+            23% {
+                cursor: default;
+            }
+
+            26% {
+                cursor: e-resize;
+            }
+
+            29% {
+                cursor: ew-resize;
+            }
+
+            31% {
+                cursor: grab;
+            }
+
+            34% {
+                cursor: grabbing;
+            }
+
+            37% {
+                cursor: help;
+            }
+
+            40% {
+                cursor: move;
+            }
+
+            43% {
+                cursor: n-resize;
+            }
+
+            46% {
+                cursor: ne-resize;
+            }
+
+            49% {
+                cursor: nesw-resize;
+            }
+
+            51% {
+                cursor: ns-resize;
+            }
+
+            54% {
+                cursor: nw-resize;
+            }
+
+            57% {
+                cursor: nwse-resize;
+            }
+
+            60% {
+                cursor: no-drop;
+            }
+
+            63% {
+                cursor: none;
+            }
+
+            66% {
+                cursor: not-allowed;
+            }
+
+            69% {
+                cursor: pointer;
+            }
+
+            71% {
+                cursor: progress;
+            }
+
+            74% {
+                cursor: row-resize;
+            }
+
+            77% {
+                cursor: s-resize;
+            }
+
+            80% {
+                cursor: se-resize;
+            }
+
+            83% {
+                cursor: sw-resize;
+            }
+
+            86% {
+                cursor: text;
+            }
+
+            89% {
+                cursor: url(myBall.cur), auto;
+            }
+
+            91% {
+                cursor: w-resize;
+            }
+
+            94% {
+                cursor: wait;
+            }
+
+            97% {
+                cursor: zoom-in;
+            }
+
+            100% {
+                cursor: zoom-out;
+            }
+        }
+
+        .code-line {
+            white-space-collapse: collapse;
+        }
+
+        .whitespace {
+            white-space: pre;
+        }
+
+        .boolean {
+            color: #F71735;
+        }
+
+        .number {
+            color: #F71735;
+        }
+
+        .operator {
+            color: #23967F;
+        }
+
+        .string {
+            color: #23967F;
+        }
+
+        .comment {
+            color: gray;
+        }
+
+        .word {
+            color: #011627;
+        }
+
+        footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+            z-index: -1;
+            font: 16px "FreeMono", monospace;
+            color: var(--accent-color);
+        }
+    </style>
+</head>
+
+<body>
+    {{.Me}}
+    <footer>last updated {{.Date}}</footer>
+</body>
+```
 - contact me
   - => mailto:ted.summer2@gmail.com
   - => https://github.com/macintoshpie

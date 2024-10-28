@@ -45,7 +45,9 @@ func (lr *ListRenderer) Render(node *parser.Node, o io.Writer) {
 			o.Write([]byte(node.BlockType.Token()))
 			o.Write([]byte(lr.tokenPadding))
 		}
-		o.Write([]byte(node.Content + "\n"))
+		// escape the content
+		content := strings.ReplaceAll(node.Content, "```", "\\`\\`\\`")
+		o.Write([]byte(content + "\n"))
 
 		if node.BlockType == parser.BlockPreformatted {
 			o.Write([]byte("```\n"))

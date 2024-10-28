@@ -191,6 +191,21 @@ func (node *Node) String() string {
 	return fmt.Sprintf("[%s]%s", node.BlockType.Name(), node.Content)
 }
 
+func (node *Node) FindNode(content string) (*Node, error) {
+	if node.Content == content {
+		return node, nil
+	}
+
+	for _, child := range node.Children {
+		foundNode, err := child.FindNode(content)
+		if err == nil {
+			return foundNode, nil
+		}
+	}
+
+	return nil, fmt.Errorf("Node with content \"%s\" not found", content)
+}
+
 func (node *Node) updateID() {
 	node.ID = hashString(node.Content)
 }
