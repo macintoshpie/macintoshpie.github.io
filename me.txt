@@ -23,6 +23,21 @@
   - this website (lists version)
     - This website is written as a single file as a big list
       - roughly follows syntax follows gemini gemfile format. will probably move further away from it as I go because its mine
+    - tests
+      - ```
+// code formatting
+def hello():
+  print("world!")
+
+foo = 1 + 2.3
+
+{
+  "foo": {
+    "bar": [1, 2, 3, "four"],
+  },
+  "yes": false,
+}
+```
   - tombola: generative music
     - Inspired by Teenage Engineering OP-1's tombola sequencer.
     - => https://tombola.tedsummer.com/
