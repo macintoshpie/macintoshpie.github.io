@@ -38,6 +38,19 @@ foo = 1 + 2.3
   "yes": false,
 }
 ```
+    - todos
+      - truncate all section headers, at x chars, then show full on hover. might need special consideration for mobile though b/c I think tap results in persistent hover
+        - ```
+.truncate {
+  display: inline-block;
+  width: 20ch; /* change 20 to the desired character limit */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+```
+      - fix text overflow for code. maybe do scrollable on overflow-x
+      - generate nodes using code files e.g. codeFilesRoot := parser.ParseFileTree(".", []string{".go"}, []string{"me.txt", "me.tmpl.html"})
   - tombola: generative music
     - Inspired by Teenage Engineering OP-1's tombola sequencer.
     - => https://tombola.tedsummer.com/

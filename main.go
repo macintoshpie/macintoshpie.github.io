@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/xml"
+	"fmt"
 	"os"
 	"strings"
 	"text/template"
@@ -88,7 +89,7 @@ func buildHTML(siteDataFile, siteTemplateFile string) {
 				attrs = []xml.Attr{{Name: xml.Name{Local: "id"}, Value: "sillyCss"}}
 			}
 			encodeStartTag(encoder, "summary", attrs...)
-			encoder.EncodeToken(xml.CharData(node.Content))
+			encoder.EncodeToken(xml.CharData(getNodeSummary(node)))
 			encodeEndTag(encoder, "summary")
 			encodeStartTag(encoder, "p")
 		},
@@ -202,4 +203,24 @@ func isProbablyImage(s string) bool {
 
 func isProbablyYouTube(s string) bool {
 	return strings.Contains(s, "youtube.com/embed")
+}
+
+func recursivePrint(node *parser.Node, depth int) {
+	fmt.Println(strings.Repeat("  ", depth), node.Content)
+	for _, child := range node.Children {
+		recursivePrint(child, depth+1)
+	}
+}
+
+func getNodeSummary(node *parser.Node) string {
+	if node.BlockType == parser.BlockPreformatted {
+		// return first 30 characters
+		if len(node.Content) > 30 {
+			return fmt.Sprintf("`code` %s...", node.Content[:30])
+		}
+
+		return node.Content
+	}
+
+	return node.Content
 }
