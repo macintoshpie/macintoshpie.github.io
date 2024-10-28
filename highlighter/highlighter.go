@@ -15,7 +15,7 @@ type TokenPattern struct {
 var allPatterns = []TokenPattern{
 	{Name: "whitespace", Pattern: regexp.MustCompile(`\s+`), Priority: 0},
 	{Name: "boolean", Pattern: regexp.MustCompile(`true|false|True|False`), Priority: 10},
-	{Name: "operator", Pattern: regexp.MustCompile(`[+\-*/\.\=\{\}\(\)\[\];:]`), Priority: 20},
+	{Name: "operator", Pattern: regexp.MustCompile(`[+\-*/\.\=<>\!\{\}\(\)\[\];:]`), Priority: 20},
 	{Name: "number", Pattern: regexp.MustCompile(`\d+(\.\d+)?`), Priority: 30},
 	{Name: "string", Pattern: regexp.MustCompile(`"[^"]+"`), Priority: 40},
 	{Name: "comment", Pattern: regexp.MustCompile(`//.*`), Priority: 50},
