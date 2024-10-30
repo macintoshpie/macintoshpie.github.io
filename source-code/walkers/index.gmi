@@ -1,0 +1,4 @@
+# walkers
+
+=> /source-code
+=> /source-code/walkers/walker-go
