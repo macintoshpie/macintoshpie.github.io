@@ -1,4 +1,7 @@
-package main
+# main.go
+
+=> /source-code
+``` package main
 
 import (
 	"encoding/xml"
@@ -296,7 +299,7 @@ func buildGemfiles(siteDataFile string) {
 			case parser.BlockLink:
 				parentData.indexFile.WriteString("=> " + node.Content + "\n")
 			case parser.BlockPreformatted:
-				parentData.indexFile.WriteString("```" + node.Content + "\n```" + "\n")
+				parentData.indexFile.WriteString("\`\`\`" + node.Content + "\n\`\`\`" + "\n")
 			case parser.BlockHeader:
 				parentData.indexFile.WriteString("# " + node.Content + "\n")
 			case parser.BlockQuote:
@@ -448,3 +451,5 @@ func updateSiteDataSourceCode() {
 	listRenderer.Render(root, siteTxt)
 	siteTxt.Close()
 }
+
+```

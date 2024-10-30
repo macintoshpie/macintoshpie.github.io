@@ -17,7 +17,7 @@
       - => http://www.beerxml.com/
     - css
       - just kidding i have no idea how to use it properly
-- sometimes I make things
+- $ sometimes I make things
   - cursors
     - => https://www.tedsummer.com/cursors
   - this website (lists version)
@@ -28,7 +28,7 @@
     - tests
       - here's where i write tests for this website
       - this is a really long line I wonder how it will render. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-      - ```                        // code formatting
+      - ```                                                                                       // code formatting
 def hello():
   print("world!")
 
@@ -86,10 +86,10 @@ foo = 1 + 2.3
   - pentaku js
     - Play against a friend or naive bots in pentago, gomoku, and other grid based games.
     - => /images/pentaku.png
-- sometimes I write
+- $ sometimes I write
   - $ shorts
     - perl should have used the keyword "my" for constants and "our" for variables
-      - ```                        my $NAME = "ted";
+      - ```                                                                                       my $NAME = "ted";
 our @shared_friends = ("alice", "bob", "charlie");
 ```
       - it also should have used camel case
@@ -121,7 +121,7 @@ our @shared_friends = ("alice", "bob", "charlie");
       - => https://github.com/lambci/docker-lambda
     - To fix this, I created a small python proxy takes requests, converts them into API Gateway requests, forwards it to our docker container with the lambda, then converts the API Gateway response into a normal HTTP response. I _really_ struggled to get the python request handler to do all of the things I wanted, but eventually I got it working.
     - Here's the full script I use to run the lambda as an HTTP API locally. Since I'm using golang I use the `go1.x` tag for the container and provide the path to the executable. Also, I ended up wrapping the python starting process in a loop b/c it was taking a while for the port to become available again after killing and restarting the script.
-      - ```                        bash
+      - ```                                                                                       bash
 #! /bin/bash
 # Starts a a mock lambda server allowing you to make requests
 set -e
@@ -208,11 +208,11 @@ while not started:
     - Here's a quick example of using jq in a for loop. jq has some nice functional stuff built in such as `map()`, but sometimes you need to do some fancy stuff with the data. This might be useful when you've filtered a jq array, and then need to iterate over the objects to do some work that you can't do in jq alone.
     - For this example, the goal is to iterate through an array of user objects, downloading their pictures. We'll use some fake user data from https://reqres.in/, you can download it with the script below
       - script
-        - ```                        bash
+        - ```                                                                                       bash
 curl https://reqres.in/api/users?page=1 > user_loop.json
 ```
       - output
-        - ```                        JSON
+        - ```                                                                                       JSON
 {
   "page": 1,
   "per_page": 6,
@@ -238,7 +238,7 @@ curl https://reqres.in/api/users?page=1 > user_loop.json
 }
 ```
     - The finished result
-      - ```                        bash
+      - ```                                                                                       bash
 imagesDir="tmp_user_images"
 mkdir -p $imagesDir
 
@@ -250,7 +250,7 @@ while read -r user; do
 done <<< "$(cat user_loop.json | jq -c '.data[]')"
 ```
     - The part of interest (the looping), is written like this
-      - ```                        bash
+      - ```                                                                                       bash
 while read -r user; do
   # do work on user object
 done <<< "$(cat user_loop.json | jq -c '.data[]')"
@@ -258,14 +258,14 @@ done <<< "$(cat user_loop.json | jq -c '.data[]')"
     - # # Breakdown
       - # ## Get the objects
         - First, we care only about the `data` array which stores our user objects containing the URLs, so we use that object id to access it:
-        - ```                        bash
+        - ```                                                                                       bash
 cat user_loop.json | jq -c '.data[]'
 ```
         - Notice `-c` flag, it's important for looping over the objects. This tells jq to put each object onto a single line, which we'll use in the loop.
       - # ## Loop over lines
         - In bash, we can loop over lines by using the `while read -r varName; do ...; done <<< "$lineSeparatedVar"` pattern. `read -r <name>` will read in a line from STDIN, then assign the value to `<name>`; the `-r` flag tells `read` "do not allow backslashes to escape any characters".  
         - Now we can loop over objects from our array like so
-        - ```                        bash
+        - ```                                                                                       bash
 while read -r user; do
   # do work on user object
 done <<< "$(cat user_loop.json | jq -c '.data[]')"
@@ -279,7 +279,7 @@ done <<< "$(cat user_loop.json | jq -c '.data[]')"
     - => https://stedolan.github.io/jq/
     - Question: What is the number of unique destination IPs a file is sent to, on average?  
       - A shortened version of the provided data, `incidents.json`, is below.
-        - ```                        JSON
+        - ```                                                                                       JSON
 {
   "tickets": [
     {
@@ -313,7 +313,7 @@ done <<< "$(cat user_loop.json | jq -c '.data[]')"
       - > - Migos, Pipe it up
       - => https://www.youtube.com/watch?v=8g2KKGgK-0w
       - In jq you just create an array of the number of unique destination IPs for each file hash, then calculate the average:
-        - ```                        bash
+        - ```                                                                                       bash
 $ cat incidents.json \
   | jq '[
           .tickets
@@ -326,7 +326,7 @@ $ cat incidents.json \
         - jq accepts a JSON document as input, so first we `cat` our JSON data into jq. In jq, arrays and individual elements can be piped into other functions.
     - # ## group_by
       - The first step is pretty straight forward. We select `tickets` and group the objects the objects by their `.file_hash` attribute, giving us this:
-      - ```                        bash
+      - ```                                                                                       bash
 $ cat incidents.json \
   | jq '[
           .tickets
@@ -334,7 +334,7 @@ $ cat incidents.json \
         ]'
 ```
         - output:
-          - ```                        JSON
+          - ```                                                                                       JSON
 [
   [
     {
@@ -382,7 +382,7 @@ $ cat incidents.json \
 ```
     - # ## unique_by
       - Next we find the objects with unique destination ips within each of these groups. I'm not sure how jq decides which object to select from a group that share a value, but it doesn't matter for our purposes.
-        - ```                        bash
+        - ```                                                                                       bash
       $ cat incidents.json \
         | jq '[
                 .tickets
@@ -439,7 +439,7 @@ $ cat incidents.json \
 ```
     - # ## length
       - Then we get the number of objects in each group
-        - ```                        bash
+        - ```                                                                                       bash
 $ cat incidents.json \
   | jq '[
           .tickets
@@ -449,7 +449,7 @@ $ cat incidents.json \
         ]'
 ```
       - output:
-        - ```                        JSON
+        - ```                                                                                       JSON
 [
   1,
   2,
@@ -462,7 +462,7 @@ $ cat incidents.json \
 ```
     - # ## add / length
       - Then you can just pipe that array into `add / length` to calculate the average for the array
-        - ```                        bash
+        - ```                                                                                       bash
 $ cat incidents.json \
   | jq '[
           .tickets
@@ -473,10 +473,10 @@ $ cat incidents.json \
         | add / length'
 ```
       - output:
-        - ```                        JSON
+        - ```                                                                                       JSON
 1.4285714285714286
 ```
-- sometimes I talk
+- $ sometimes I talk
   - server-sent events
     - A brief introduction to server-sent events, when to use them and when not to use them.
     - => /images/sse.png
@@ -519,9 +519,9 @@ $ cat incidents.json \
       - Created an embedded database application in Java with functional GUI for more effective recruitment
   - tools and such
     - watever
-- source code
-  - dev
-   - server.go
+- $ source code
+  - $ dev
+   - $ server.go
     - ``` package dev
 
 import (
@@ -633,15 +633,15 @@ func handleGeminiRequest(conn net.Conn, dir string) {
 
 	// check if the requested file is in the base directory
 	// haven't been able to sufficiently test this so it could be insecure
-	isServable := strings.HasPrefix(resourcePath, absBaseDir+string(filepath.Separator))
-	if !isServable {
-		geminiLogger.Println("Requested file is not in the base directory:", resourcePath)
-		conn.Write([]byte(responseInvalidRequest))
-		return
-	}
+	// isServable := strings.HasPrefix(resourcePath, absBaseDir+string(filepath.Separator))
+	// if !isServable {
+	// 	geminiLogger.Println("Requested file is not in the base directory:", resourcePath, )
+	// 	conn.Write([]byte(responseInvalidRequest))
+	// 	return
+	// }
 
 	response := handleGeminiFileRequest(resourcePath, true)
-	geminiLogger.Printf("%s -> %d\n", uriReq.Path, response.statusCode)
+	geminiLogger.Printf("%s -> %d (%s)\n", uriReq.Path, response.statusCode, response.mimeType)
 	response.Write(conn)
 }
 
@@ -751,6 +751,12 @@ func sniffContentType(file *os.File) (string, error) {
 	}
 
 	detectedType := http.DetectContentType(sniffData)
+
+	if detectedType == "text/plain; charset=utf-8" && filepath.Ext(file.Name()) == ".gmi" {
+		return "text/gemini", nil
+	}
+
+	// manually created gemini files are detected as application/octet-stream for some reason
 	if detectedType == "application/octet-stream" && filepath.Ext(file.Name()) == ".gmi" {
 		return "text/gemini", nil
 	}
@@ -759,8 +765,8 @@ func sniffContentType(file *os.File) (string, error) {
 }
 
 ```
-  - highlighter
-   - highlighter.go
+  - $ highlighter
+   - $ highlighter.go
     - ``` package highlighter
 
 import (
@@ -887,13 +893,16 @@ func ParseCode(code string) [][]Span {
 }
 
 ```
-  - main.go
+  - $ main.go
    - ``` package main
 
 import (
 	"encoding/xml"
 	"fmt"
 	"os"
+	"path/filepath"
+	"regexp"
+	"slices"
 	"strings"
 	"text/template"
 	"time"
@@ -907,7 +916,10 @@ import (
 )
 
 const siteData = "me.txt"
-const out = "build/index.html"
+const outDir = "build"
+
+var out = filepath.Join(outDir, "index.html")
+
 const siteTemplate = "me.tmpl.html"
 
 const debug = false
@@ -922,15 +934,16 @@ var templateData = struct {
 
 func main() {
 	// build the site every time the site data changes
-	monitor, err := monitors.NewFileMonitor([]string{siteData, siteTemplate})
+	siteMonitor, err := monitors.NewFileMonitor([]string{siteData, siteTemplate})
 	if err != nil {
 		panic(err)
 	}
 	done := make(chan bool)
 	go func() {
-		for x := range monitor.Changed {
+		for x := range siteMonitor.Changed {
 			_ = x
 			buildHTML(siteData, siteTemplate)
+			buildGemfiles(siteData)
 			fmt.Println("Rebuilt site")
 		}
 	}()
@@ -949,11 +962,11 @@ func main() {
 	}()
 
 	go func() {
-		dev.ServeDirectory("build")
+		dev.ServeDirectory(outDir)
 	}()
 
 	go func() {
-		dev.GeminiServeDirectory("build")
+		dev.GeminiServeDirectory(outDir)
 	}()
 
 	<-done
@@ -1088,6 +1101,162 @@ func buildHTML(siteDataFile, siteTemplateFile string) {
 	templateRoot.Execute(outFile, templateData)
 }
 
+type GeminiWalkerDir struct {
+	node      *parser.Node
+	path      string
+	indexFile *os.File
+}
+
+type GeminiWalkerCtx struct {
+	root          *parser.Node
+	dirBlockTypes []parser.BlockType
+	// Maps node ID to the directory data
+	dirData map[string]*GeminiWalkerDir
+}
+
+func buildGemfiles(siteDataFile string) {
+	siteTxt, err := os.Open(siteDataFile)
+	if err != nil {
+		panic(err)
+	}
+	defer siteTxt.Close()
+
+	root := parser.Parse(siteTxt)
+
+	geminiCtx := GeminiWalkerCtx{
+		root:          root,
+		dirBlockTypes: []parser.BlockType{parser.BlockPage},
+		dirData:       map[string]*GeminiWalkerDir{},
+	}
+	geminiCtx.init()
+
+	walker := walkers.NewWalker()
+	walker.AddEventListener(geminiCtx.dirBlockTypes, walkers.ListenerConfig{
+		OnEnter: func(node *parser.Node) {
+			// create a directory for the page under the parent page (or root)
+			parentData, err := geminiCtx.findDirParentData(node)
+			if err != nil {
+				panic(err)
+			}
+
+			dirPath := filepath.Join(parentData.path, slugify(node.Content))
+			err = os.MkdirAll(filepath.Join(outDir, dirPath), 0755)
+			if err != nil {
+				panic(err)
+			}
+
+			// create index file
+			indexFile, err := os.Create(filepath.Join(outDir, dirPath, "index.gmi"))
+			if err != nil {
+				panic(err)
+			}
+			indexFile.WriteString("# " + node.Content + "\n\n")
+			geminiCtx.dirData[node.ID] = &GeminiWalkerDir{
+				node:      node,
+				path:      dirPath,
+				indexFile: indexFile,
+			}
+
+			// add a link to this page from parent
+			parentData.indexFile.WriteString("=> " + dirPath + "\n")
+
+			// add a link back to the parent
+			indexFile.WriteString("=> " + parentData.path + "\n")
+		},
+		OnExit: func(node *parser.Node) {
+			// we can close the file now that all children are done
+			if data, ok := geminiCtx.dirData[node.ID]; ok {
+				data.indexFile.Close()
+			}
+		},
+	})
+
+	fileContentBlockTypes := []parser.BlockType{}
+	for _, blockType := range parser.RenderableBlockTypes {
+		if !slices.Contains(geminiCtx.dirBlockTypes, blockType) {
+			fileContentBlockTypes = append(fileContentBlockTypes, blockType)
+		}
+	}
+	walker.AddEventListener(fileContentBlockTypes, walkers.ListenerConfig{
+		OnEnter: func(node *parser.Node) {
+			// write the content to the index file
+			parentData, err := geminiCtx.findDirParentData(node)
+			if err != nil {
+				panic(err)
+			}
+
+			switch node.BlockType {
+			case parser.BlockText:
+				thisNodeDepth := node.Depth - parentData.node.Depth
+				parentData.indexFile.WriteString("* " + strings.Repeat(".", thisNodeDepth) + " " + node.Content + "\n")
+			case parser.BlockLink:
+				parentData.indexFile.WriteString("=> " + node.Content + "\n")
+			case parser.BlockPreformatted:
+				parentData.indexFile.WriteString("\`\`\`" + node.Content + "\n\`\`\`" + "\n")
+			case parser.BlockHeader:
+				parentData.indexFile.WriteString("# " + node.Content + "\n")
+			case parser.BlockQuote:
+				parentData.indexFile.WriteString("> " + node.Content + "\n")
+			default:
+				panic(fmt.Sprintf("unhandled block type: %s", node.BlockType.Name()))
+			}
+		},
+		OnExit: func(node *parser.Node) {
+		},
+	})
+
+	walker.Walk(root)
+}
+
+// init initializes the GeminiWalkerCtx and must be called before walking the tree
+func (g *GeminiWalkerCtx) init() {
+	// create root
+	rootIndex := filepath.Join(outDir, "index.gmi")
+	rootFile, err := os.Create(rootIndex)
+	if err != nil {
+		panic(err)
+	}
+
+	data := &GeminiWalkerDir{
+		node:      g.root,
+		path:      "/",
+		indexFile: rootFile,
+	}
+
+	g.dirData[g.root.ID] = data
+}
+
+func (g *GeminiWalkerCtx) findDirParent(node *parser.Node) *parser.Node {
+	parentNode := node.Parent
+	for parentNode != nil &&
+		!slices.Contains(g.dirBlockTypes, parentNode.BlockType) &&
+		// root node is implicitly a dir block type
+		parentNode.BlockType != parser.BlockRoot {
+		parentNode = parentNode.Parent
+	}
+
+	return parentNode
+}
+
+func (g *GeminiWalkerCtx) findDirParentData(node *parser.Node) (*GeminiWalkerDir, error) {
+	parentNode := g.findDirParent(node)
+	if parentNode == nil {
+		return nil, fmt.Errorf("no directory data found for node: %s (%s)", node.Content, node.BlockType.Name())
+	}
+
+	if data, ok := g.dirData[parentNode.ID]; ok {
+		return data, nil
+	}
+
+	return nil, fmt.Errorf("no directory data found for node: %s (%s)", node.Content, node.BlockType.Name())
+}
+
+// Returns a valid slug usable for url and file directory names
+func slugify(s string) string {
+	re := regexp.MustCompile(`[^a-z0-9]+`)
+	return strings.Trim(re.ReplaceAllString(strings.ToLower(s), "-"), "-")
+}
+
 func encodeStartTag(e *xml.Encoder, name string, attrs ...xml.Attr) error {
 	return e.EncodeToken(xml.StartElement{Name: xml.Name{Local: name}, Attr: attrs})
 }
@@ -1177,8 +1346,8 @@ func updateSiteDataSourceCode() {
 }
 
 ```
-  - monitors
-   - monitor.go
+  - $ monitors
+   - $ monitor.go
     - ``` package monitors
 
 import (
@@ -1254,8 +1423,8 @@ func (m *FileMonitor) checkFiles() {
 }
 
 ```
-  - parsers
-   - fileTreeParser.go
+  - $ parsers
+   - $ fileTreeParser.go
     - ``` package parser
 
 import (
@@ -1312,7 +1481,7 @@ func completeNode(path string, root *Node) {
 		newNode := &Node{
 			Depth:     currentDepth,
 			Content:   part,
-			BlockType: BlockText,
+			BlockType: BlockPage,
 			Parent:    currentNode,
 			Children:  []*Node{},
 			ID:        "",
@@ -1348,8 +1517,8 @@ func addCodeNode(parent *Node, path string, currentDepth int) {
 }
 
 ```
-   - parsers
-    - parser.go
+   - $ parsers
+    - $ parser.go
      - ``` package parser
 
 import (
@@ -1596,8 +1765,8 @@ func hashString(input string) string {
 }
 
 ```
-  - renderers
-   - html.go
+  - $ renderers
+   - $ html.go
     - ``` package renderers
 
 import (
@@ -1713,8 +1882,8 @@ func ulEncoder(node *xmlRendererNode, e *xml.Encoder, start xml.StartElement) er
 }
 
 ```
-   - renderers
-    - list.go
+   - $ renderers
+    - $ list.go
      - ``` package renderers
 
 import (
@@ -1777,8 +1946,8 @@ func (lr *ListRenderer) Render(node *parser.Node, o io.Writer) {
 }
 
 ```
-   - renderers
-    - renderer.go
+   - $ renderers
+    - $ renderer.go
      - ``` package renderers
 
 import (
@@ -1792,8 +1961,8 @@ type Renderer interface {
 }
 
 ```
-   - renderers
-    - xml.go
+   - $ renderers
+    - $ xml.go
      - ``` package renderers
 
 import (
@@ -1884,8 +2053,8 @@ func simpleXmlEncoder(node *xmlRendererNode, e *xml.Encoder, start xml.StartElem
 }
 
 ```
-  - walkers
-   - walker.go
+  - $ walkers
+   - $ walker.go
     - ``` package walkers
 
 import parser "github.com/macintoshpie/listwebsite/parsers"
@@ -1942,7 +2111,7 @@ func (lr *Walker) Walk(node *parser.Node) {
 }
 
 ```
-  - me.txt
+  - $ me.txt
    - ``` - Ted Summer
   - => /images/me-circle.png
   - things I like 🍓
@@ -1962,9 +2131,9 @@ func (lr *Walker) Walk(node *parser.Node) {
       - => http://www.beerxml.com/
     - css
       - just kidding i have no idea how to use it properly
-- sometimes I make things
+- $ sometimes I make things
   - cursors
-    - => /cursors
+    - => https://www.tedsummer.com/cursors
   - this website (lists version)
     - This website is written as a single file as a big list
       - roughly follows syntax follows gemini gemfile format. will probably move further away from it as I go because its mine
@@ -1973,7 +2142,7 @@ func (lr *Walker) Walk(node *parser.Node) {
     - tests
       - here's where i write tests for this website
       - this is a really long line I wonder how it will render. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-      - \`\`\`                        // code formatting
+      - \`\`\`                                                                                       // code formatting
 def hello():
   print("world!")
 
@@ -2031,10 +2200,10 @@ foo = 1 + 2.3
   - pentaku js
     - Play against a friend or naive bots in pentago, gomoku, and other grid based games.
     - => /images/pentaku.png
-- sometimes I write
+- $ sometimes I write
   - $ shorts
     - perl should have used the keyword "my" for constants and "our" for variables
-      - \`\`\`                        my $NAME = "ted";
+      - \`\`\`                                                                                       my $NAME = "ted";
 our @shared_friends = ("alice", "bob", "charlie");
 \`\`\`
       - it also should have used camel case
@@ -2066,7 +2235,7 @@ our @shared_friends = ("alice", "bob", "charlie");
       - => https://github.com/lambci/docker-lambda
     - To fix this, I created a small python proxy takes requests, converts them into API Gateway requests, forwards it to our docker container with the lambda, then converts the API Gateway response into a normal HTTP response. I _really_ struggled to get the python request handler to do all of the things I wanted, but eventually I got it working.
     - Here's the full script I use to run the lambda as an HTTP API locally. Since I'm using golang I use the `go1.x` tag for the container and provide the path to the executable. Also, I ended up wrapping the python starting process in a loop b/c it was taking a while for the port to become available again after killing and restarting the script.
-      - \`\`\`                        bash
+      - \`\`\`                                                                                       bash
 #! /bin/bash
 # Starts a a mock lambda server allowing you to make requests
 set -e
@@ -2153,11 +2322,11 @@ while not started:
     - Here's a quick example of using jq in a for loop. jq has some nice functional stuff built in such as `map()`, but sometimes you need to do some fancy stuff with the data. This might be useful when you've filtered a jq array, and then need to iterate over the objects to do some work that you can't do in jq alone.
     - For this example, the goal is to iterate through an array of user objects, downloading their pictures. We'll use some fake user data from https://reqres.in/, you can download it with the script below
       - script
-        - \`\`\`                        bash
+        - \`\`\`                                                                                       bash
 curl https://reqres.in/api/users?page=1 > user_loop.json
 \`\`\`
       - output
-        - \`\`\`                        JSON
+        - \`\`\`                                                                                       JSON
 {
   "page": 1,
   "per_page": 6,
@@ -2183,7 +2352,7 @@ curl https://reqres.in/api/users?page=1 > user_loop.json
 }
 \`\`\`
     - The finished result
-      - \`\`\`                        bash
+      - \`\`\`                                                                                       bash
 imagesDir="tmp_user_images"
 mkdir -p $imagesDir
 
@@ -2195,7 +2364,7 @@ while read -r user; do
 done <<< "$(cat user_loop.json | jq -c '.data[]')"
 \`\`\`
     - The part of interest (the looping), is written like this
-      - \`\`\`                        bash
+      - \`\`\`                                                                                       bash
 while read -r user; do
   # do work on user object
 done <<< "$(cat user_loop.json | jq -c '.data[]')"
@@ -2203,14 +2372,14 @@ done <<< "$(cat user_loop.json | jq -c '.data[]')"
     - # # Breakdown
       - # ## Get the objects
         - First, we care only about the `data` array which stores our user objects containing the URLs, so we use that object id to access it:
-        - \`\`\`                        bash
+        - \`\`\`                                                                                       bash
 cat user_loop.json | jq -c '.data[]'
 \`\`\`
         - Notice `-c` flag, it's important for looping over the objects. This tells jq to put each object onto a single line, which we'll use in the loop.
       - # ## Loop over lines
         - In bash, we can loop over lines by using the `while read -r varName; do ...; done <<< "$lineSeparatedVar"` pattern. `read -r <name>` will read in a line from STDIN, then assign the value to `<name>`; the `-r` flag tells `read` "do not allow backslashes to escape any characters".  
         - Now we can loop over objects from our array like so
-        - \`\`\`                        bash
+        - \`\`\`                                                                                       bash
 while read -r user; do
   # do work on user object
 done <<< "$(cat user_loop.json | jq -c '.data[]')"
@@ -2224,7 +2393,7 @@ done <<< "$(cat user_loop.json | jq -c '.data[]')"
     - => https://stedolan.github.io/jq/
     - Question: What is the number of unique destination IPs a file is sent to, on average?  
       - A shortened version of the provided data, `incidents.json`, is below.
-        - \`\`\`                        JSON
+        - \`\`\`                                                                                       JSON
 {
   "tickets": [
     {
@@ -2258,7 +2427,7 @@ done <<< "$(cat user_loop.json | jq -c '.data[]')"
       - > - Migos, Pipe it up
       - => https://www.youtube.com/watch?v=8g2KKGgK-0w
       - In jq you just create an array of the number of unique destination IPs for each file hash, then calculate the average:
-        - \`\`\`                        bash
+        - \`\`\`                                                                                       bash
 $ cat incidents.json \
   | jq '[
           .tickets
@@ -2271,7 +2440,7 @@ $ cat incidents.json \
         - jq accepts a JSON document as input, so first we `cat` our JSON data into jq. In jq, arrays and individual elements can be piped into other functions.
     - # ## group_by
       - The first step is pretty straight forward. We select `tickets` and group the objects the objects by their `.file_hash` attribute, giving us this:
-      - \`\`\`                        bash
+      - \`\`\`                                                                                       bash
 $ cat incidents.json \
   | jq '[
           .tickets
@@ -2279,7 +2448,7 @@ $ cat incidents.json \
         ]'
 \`\`\`
         - output:
-          - \`\`\`                        JSON
+          - \`\`\`                                                                                       JSON
 [
   [
     {
@@ -2327,7 +2496,7 @@ $ cat incidents.json \
 \`\`\`
     - # ## unique_by
       - Next we find the objects with unique destination ips within each of these groups. I'm not sure how jq decides which object to select from a group that share a value, but it doesn't matter for our purposes.
-        - \`\`\`                        bash
+        - \`\`\`                                                                                       bash
       $ cat incidents.json \
         | jq '[
                 .tickets
@@ -2384,7 +2553,7 @@ $ cat incidents.json \
 \`\`\`
     - # ## length
       - Then we get the number of objects in each group
-        - \`\`\`                        bash
+        - \`\`\`                                                                                       bash
 $ cat incidents.json \
   | jq '[
           .tickets
@@ -2394,7 +2563,7 @@ $ cat incidents.json \
         ]'
 \`\`\`
       - output:
-        - \`\`\`                        JSON
+        - \`\`\`                                                                                       JSON
 [
   1,
   2,
@@ -2407,7 +2576,7 @@ $ cat incidents.json \
 \`\`\`
     - # ## add / length
       - Then you can just pipe that array into `add / length` to calculate the average for the array
-        - \`\`\`                        bash
+        - \`\`\`                                                                                       bash
 $ cat incidents.json \
   | jq '[
           .tickets
@@ -2418,10 +2587,10 @@ $ cat incidents.json \
         | add / length'
 \`\`\`
       - output:
-        - \`\`\`                        JSON
+        - \`\`\`                                                                                       JSON
 1.4285714285714286
 \`\`\`
-- sometimes I talk
+- $ sometimes I talk
   - server-sent events
     - A brief introduction to server-sent events, when to use them and when not to use them.
     - => /images/sse.png
@@ -2464,7 +2633,7 @@ $ cat incidents.json \
       - Created an embedded database application in Java with functional GUI for more effective recruitment
   - tools and such
     - watever
-- source code
+- $ source code
 - contact me
   - => mailto:ted.summer2@gmail.com
   - => https://github.com/macintoshpie
@@ -2472,7 +2641,7 @@ $ cat incidents.json \
   - => https://linkedin.com/in/tedsummer
 
 ```
-  - me.tmpl.html
+  - $ me.tmpl.html
    - ``` <!DOCTYPE html>
 
 <head>

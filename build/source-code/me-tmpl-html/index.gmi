@@ -1,0 +1,345 @@
+# me.tmpl.html
+
+=> /source-code
+``` <!DOCTYPE html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Ted Summer</title>
+    <link rel="icon" href="/images/strawberry.svg" type="image/svg+xml" />
+    <style>
+        :root {
+            --accent-color: #8ED081;
+            --border-radius: 16px;
+            --border-width: 2px;
+            --radius: 2px;
+        }
+
+        body {
+            margin: 0;
+            background-color: #fae7ff;
+            background-image: radial-gradient(#000000 1.5px, transparent 0);
+            background-size: 32px 32px;
+            background-position: 0px 0px;
+            background-attachment: fixed;
+
+            width: 100vw;
+            height: 100vh;
+
+            cursor: nwse-resize;
+        }
+
+        a {
+            color: #0000ff;
+        }
+
+        details {
+            display: inline;
+            vertical-align: top;
+
+            font:
+                16px "FreeMono",
+                monospace;
+            margin: 8px;
+
+            background: rgba(255, 255, 255, 0.557);
+            border-radius: var(--border-radius);
+            box-shadow: -5px 5px 5px rgba(0, 0, 0, 0.1);
+
+            max-width: 600px;
+
+            transition: transform 0.3s ease,
+                box-shadow 0.3s ease;
+        }
+
+        details:hover {
+            transform: translateY(-3px);
+            box-shadow: -7px 7px 7px rgba(0, 0, 0, 0.1) !important;
+        }
+
+        details[open] {
+            box-shadow: -6px 6px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        details:not([open]):hover {
+            animation: moveCounterClockwise 2.5s linear infinite;
+        }
+
+        details>summary {
+            border: var(--border-width) solid rgba(255, 255, 255, 0);
+            border-radius: var(--border-radius);
+            padding: 8px;
+        }
+
+        details:not([open])>summary:hover {
+            border: var(--border-width) solid rgb(0, 0, 0);
+        }
+
+        details[open]>summary {
+            border: none;
+
+            cursor: nw-resize;
+            background-color: var(--accent-color);
+            position: sticky;
+            top: 8px;
+        }
+
+        details:not([open])>summary {
+            cursor: se-resize;
+        }
+
+        details:not([open])>summary:focus-within {
+            border: var(--border-width) solid var(--accent-color);
+        }
+
+        img {
+            display: block;
+            margin: auto;
+            max-width: 400px;
+            border-radius: var(--border-radius);
+        }
+
+        iframe {
+            display: block;
+            margin: auto;
+            max-width: 400px;
+        }
+
+
+        #sillyCss {
+            animation: ohno 1s linear infinite;
+        }
+
+        @keyframes moveCounterClockwise {
+            0% {
+                transform: translate(calc(var(--radius) * 1), calc(var(--radius) * 0));
+            }
+
+            12.5% {
+                transform: translate(calc(var(--radius) * 0.707), calc(var(--radius) * -0.707));
+            }
+
+            25% {
+                transform: translate(calc(var(--radius) * 0), calc(var(--radius) * -1));
+            }
+
+            37.5% {
+                transform: translate(calc(var(--radius) * -0.707), calc(var(--radius) * -0.707));
+            }
+
+            50% {
+                transform: translate(calc(var(--radius) * -1), calc(var(--radius) * 0));
+            }
+
+            62.5% {
+                transform: translate(calc(var(--radius) * -0.707), calc(var(--radius) * 0.707));
+            }
+
+            75% {
+                transform: translate(calc(var(--radius) * 0), calc(var(--radius) * 1));
+            }
+
+            87.5% {
+                transform: translate(calc(var(--radius) * 0.707), calc(var(--radius) * 0.707));
+            }
+
+            100% {
+                transform: translate(calc(var(--radius) * 1), calc(var(--radius) * 0));
+            }
+        }
+
+        @keyframes ohno {
+            0% {
+                cursor: alias;
+            }
+
+            3% {
+                cursor: all-scroll;
+            }
+
+            6% {
+                cursor: auto;
+            }
+
+            9% {
+                cursor: cell;
+            }
+
+            11% {
+                cursor: col-resize;
+            }
+
+            14% {
+                cursor: context-menu;
+            }
+
+            17% {
+                cursor: copy;
+            }
+
+            20% {
+                cursor: crosshair;
+            }
+
+            23% {
+                cursor: default;
+            }
+
+            26% {
+                cursor: e-resize;
+            }
+
+            29% {
+                cursor: ew-resize;
+            }
+
+            31% {
+                cursor: grab;
+            }
+
+            34% {
+                cursor: grabbing;
+            }
+
+            37% {
+                cursor: help;
+            }
+
+            40% {
+                cursor: move;
+            }
+
+            43% {
+                cursor: n-resize;
+            }
+
+            46% {
+                cursor: ne-resize;
+            }
+
+            49% {
+                cursor: nesw-resize;
+            }
+
+            51% {
+                cursor: ns-resize;
+            }
+
+            54% {
+                cursor: nw-resize;
+            }
+
+            57% {
+                cursor: nwse-resize;
+            }
+
+            60% {
+                cursor: no-drop;
+            }
+
+            63% {
+                cursor: none;
+            }
+
+            66% {
+                cursor: not-allowed;
+            }
+
+            69% {
+                cursor: pointer;
+            }
+
+            71% {
+                cursor: progress;
+            }
+
+            74% {
+                cursor: row-resize;
+            }
+
+            77% {
+                cursor: s-resize;
+            }
+
+            80% {
+                cursor: se-resize;
+            }
+
+            83% {
+                cursor: sw-resize;
+            }
+
+            86% {
+                cursor: text;
+            }
+
+            89% {
+                cursor: url(myBall.cur), auto;
+            }
+
+            91% {
+                cursor: w-resize;
+            }
+
+            94% {
+                cursor: wait;
+            }
+
+            97% {
+                cursor: zoom-in;
+            }
+
+            100% {
+                cursor: zoom-out;
+            }
+        }
+
+        .code-line {
+            white-space-collapse: collapse;
+        }
+
+        .whitespace {
+            white-space: pre;
+        }
+
+        .boolean {
+            color: #F71735;
+        }
+
+        .number {
+            color: #F71735;
+        }
+
+        .operator {
+            color: #23967F;
+        }
+
+        .string {
+            color: #23967F;
+        }
+
+        .comment {
+            color: gray;
+        }
+
+        .word {
+            color: #011627;
+        }
+
+        footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+            z-index: -1;
+            font: 16px "FreeMono", monospace;
+            color: var(--accent-color);
+        }
+    </style>
+</head>
+
+<body>
+    {{.Me}}
+    <footer>last updated {{.Date}}</footer>
+</body>
+```

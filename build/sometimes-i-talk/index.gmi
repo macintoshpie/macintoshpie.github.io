@@ -1,0 +1,11 @@
+# sometimes I talk
+
+=> /
+* .. server-sent events
+* .... A brief introduction to server-sent events, when to use them and when not to use them.
+=> /images/sse.png
+=> https://docs.google.com/presentation/d/1i2vT6nMrRUsmFusH8HL-0fHZUEifyniL_8q0f0pBCBg/edit?usp=sharing
+* .. schematron
+* .... Introduction to Schematron, a language for validating XML documents.
+=> /images/schematron.png
+=> https://docs.google.com/presentation/d/16wpjtIqwqj0yagdQcObRzdDI6l_gYxCX/edit?usp=sharing&ouid=111583935946353067252&rtpof=true&sd=true

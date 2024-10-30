@@ -1,4 +1,7 @@
-package dev
+# server.go
+
+=> /source-code/dev
+``` package dev
 
 import (
 	"crypto/tls"
@@ -239,3 +242,5 @@ func sniffContentType(file *os.File) (string, error) {
 
 	return detectedType, nil
 }
+
+```

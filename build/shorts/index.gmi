@@ -1,0 +1,8 @@
+# shorts
+
+=> /
+* .. perl should have used the keyword "my" for constants and "our" for variables
+```                                                                                     my $NAME = "ted";
+our @shared_friends = ("alice", "bob", "charlie");
+```
+* .... it also should have used camel case

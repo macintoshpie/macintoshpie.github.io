@@ -1,4 +1,7 @@
-package parser
+# fileTreeParser.go
+
+=> /source-code/parsers
+``` package parser
 
 import (
 	"fmt"
@@ -88,3 +91,5 @@ func addCodeNode(parent *Node, path string, currentDepth int) {
 		ID:        "",
 	})
 }
+
+```
