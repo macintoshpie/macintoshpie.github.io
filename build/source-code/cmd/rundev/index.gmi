@@ -1,4 +1,0 @@
-# runDev
-
-=> /source-code/cmd
-=> /source-code/cmd/rundev/main-go

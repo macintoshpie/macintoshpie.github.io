@@ -1,2 +1,4 @@
 dev-cert.pem
 dev-key.pem
+/build/*
+!/build/images/
