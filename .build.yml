@@ -5,13 +5,11 @@ packages:
 - go
 environment:
   site: macintoshpie.srht.site
-  my_domain: www.tedsummer.com
+  top_level_domain: tedsummer.com
 tasks:
 - package: |
     cd ${site}
-    go run ./cmd/build
-    cd ./build
-    tar -cvz . > ../../site.tar.gz
+    ./scripts/package.sh
 - upload: |
-    hut pages publish -d ${my_domain} -p HTTPS site.tar.gz
-    hut pages publish -d ${my_domain} -p GEMINI site.tar.gz
+    cd ${site}
+    ./scripts/publish.sh ${top_level_domain}

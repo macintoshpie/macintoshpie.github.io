@@ -2,3 +2,4 @@ dev-cert.pem
 dev-key.pem
 /build/*
 !/build/images/
+site.tar.gz
