@@ -1,0 +1,12 @@
+image: alpine/edge
+oauth: pages.sr.ht/PAGES:RW
+packages:
+- hut
+environment:
+  site: macintoshpie.srht.site
+tasks:
+- package: |
+    cd $site
+    tar -cvz ./build > ../site.tar.gz
+- upload: |
+    hut pages publish -d $site site.tar.gz
