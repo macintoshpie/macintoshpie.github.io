@@ -6,7 +6,7 @@ environment:
   site: macintoshpie.srht.site
 tasks:
 - package: |
-    cd $site
-    tar -cvz ./build > ../site.tar.gz
+    cd ${site}/build
+    tar -cvz . > ../site.tar.gz
 - upload: |
     hut pages publish -d $site site.tar.gz
