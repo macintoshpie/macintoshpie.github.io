@@ -2,10 +2,12 @@ image: alpine/edge
 oauth: pages.sr.ht/PAGES:RW
 packages:
 - hut
+- go
 environment:
   site: macintoshpie.srht.site
 tasks:
 - package: |
+    go run ./cmd/build
     cd ${site}/build
     tar -cvz . > ../../site.tar.gz
 - upload: |
