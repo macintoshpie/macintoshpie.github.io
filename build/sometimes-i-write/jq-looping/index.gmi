@@ -4,11 +4,11 @@
 * .. Here's a quick example of using jq in a for loop. jq has some nice functional stuff built in such as `map()`, but sometimes you need to do some fancy stuff with the data. This might be useful when you've filtered a jq array, and then need to iterate over the objects to do some work that you can't do in jq alone.
 * .. For this example, the goal is to iterate through an array of user objects, downloading their pictures. We'll use some fake user data from https://reqres.in/, you can download it with the script below
 * .... script
-```                                                                                       bash
+```                                                                                         bash
 curl https://reqres.in/api/users?page=1 > user_loop.json
 ```
 * .... output
-```                                                                                       JSON
+```                                                                                         JSON
 {
   "page": 1,
   "per_page": 6,
@@ -34,7 +34,7 @@ curl https://reqres.in/api/users?page=1 > user_loop.json
 }
 ```
 * .. The finished result
-```                                                                                       bash
+```                                                                                         bash
 imagesDir="tmp_user_images"
 mkdir -p $imagesDir
 
@@ -46,7 +46,7 @@ while read -r user; do
 done <<< "$(cat user_loop.json | jq -c '.data[]')"
 ```
 * .. The part of interest (the looping), is written like this
-```                                                                                       bash
+```                                                                                         bash
 while read -r user; do
   # do work on user object
 done <<< "$(cat user_loop.json | jq -c '.data[]')"
@@ -54,14 +54,14 @@ done <<< "$(cat user_loop.json | jq -c '.data[]')"
 # # Breakdown
 # ## Get the objects
 * ...... First, we care only about the `data` array which stores our user objects containing the URLs, so we use that object id to access it:
-```                                                                                       bash
+```                                                                                         bash
 cat user_loop.json | jq -c '.data[]'
 ```
 * ...... Notice `-c` flag, it's important for looping over the objects. This tells jq to put each object onto a single line, which we'll use in the loop.
 # ## Loop over lines
 * ...... In bash, we can loop over lines by using the `while read -r varName; do ...; done <<< "$lineSeparatedVar"` pattern. `read -r <name>` will read in a line from STDIN, then assign the value to `<name>`; the `-r` flag tells `read` "do not allow backslashes to escape any characters".  
 * ...... Now we can loop over objects from our array like so
-```                                                                                       bash
+```                                                                                         bash
 while read -r user; do
   # do work on user object
 done <<< "$(cat user_loop.json | jq -c '.data[]')"

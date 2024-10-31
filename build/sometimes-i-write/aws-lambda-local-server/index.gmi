@@ -6,7 +6,7 @@
 => https://github.com/lambci/docker-lambda
 * .. To fix this, I created a small python proxy takes requests, converts them into API Gateway requests, forwards it to our docker container with the lambda, then converts the API Gateway response into a normal HTTP response. I _really_ struggled to get the python request handler to do all of the things I wanted, but eventually I got it working.
 * .. Here's the full script I use to run the lambda as an HTTP API locally. Since I'm using golang I use the `go1.x` tag for the container and provide the path to the executable. Also, I ended up wrapping the python starting process in a loop b/c it was taking a while for the port to become available again after killing and restarting the script.
-```                                                                                       bash
+```                                                                                         bash
 #! /bin/bash
 # Starts a a mock lambda server allowing you to make requests
 set -e

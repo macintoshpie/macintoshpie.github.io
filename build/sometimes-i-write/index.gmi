@@ -11,7 +11,7 @@
 => https://stedolan.github.io/jq/
 * .... Question: What is the number of unique destination IPs a file is sent to, on average?  
 * ...... A shortened version of the provided data, `incidents.json`, is below.
-```                                                                                       JSON
+```                                                                                         JSON
 {
   "tickets": [
     {
@@ -45,7 +45,7 @@
 > - Migos, Pipe it up
 => https://www.youtube.com/watch?v=8g2KKGgK-0w
 * ...... In jq you just create an array of the number of unique destination IPs for each file hash, then calculate the average:
-```                                                                                       bash
+```                                                                                         bash
 $ cat incidents.json \
   | jq '[
           .tickets
@@ -58,7 +58,7 @@ $ cat incidents.json \
 * ........ jq accepts a JSON document as input, so first we `cat` our JSON data into jq. In jq, arrays and individual elements can be piped into other functions.
 # ## group_by
 * ...... The first step is pretty straight forward. We select `tickets` and group the objects the objects by their `.file_hash` attribute, giving us this:
-```                                                                                       bash
+```                                                                                         bash
 $ cat incidents.json \
   | jq '[
           .tickets
@@ -66,7 +66,7 @@ $ cat incidents.json \
         ]'
 ```
 * ........ output:
-```                                                                                       JSON
+```                                                                                         JSON
 [
   [
     {
@@ -114,7 +114,7 @@ $ cat incidents.json \
 ```
 # ## unique_by
 * ...... Next we find the objects with unique destination ips within each of these groups. I'm not sure how jq decides which object to select from a group that share a value, but it doesn't matter for our purposes.
-```                                                                                       bash
+```                                                                                         bash
       $ cat incidents.json \
         | jq '[
                 .tickets
@@ -171,7 +171,7 @@ $ cat incidents.json \
 ```
 # ## length
 * ...... Then we get the number of objects in each group
-```                                                                                       bash
+```                                                                                         bash
 $ cat incidents.json \
   | jq '[
           .tickets
@@ -181,7 +181,7 @@ $ cat incidents.json \
         ]'
 ```
 * ...... output:
-```                                                                                       JSON
+```                                                                                         JSON
 [
   1,
   2,
@@ -194,7 +194,7 @@ $ cat incidents.json \
 ```
 # ## add / length
 * ...... Then you can just pipe that array into `add / length` to calculate the average for the array
-```                                                                                       bash
+```                                                                                         bash
 $ cat incidents.json \
   | jq '[
           .tickets
@@ -205,6 +205,6 @@ $ cat incidents.json \
         | add / length'
 ```
 * ...... output:
-```                                                                                       JSON
+```                                                                                         JSON
 1.4285714285714286
 ```
