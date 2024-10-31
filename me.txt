@@ -17,12 +17,17 @@
       - => http://www.beerxml.com/
     - css
       - just kidding i have no idea how to use it properly
+  - other protocols for this site
+    - => https://tedsummer.com
+    - => gemini://tedsummer.com
 - $ sometimes I make things
   - cursors
     - => https://www.tedsummer.com/cursors
   - this website (lists version)
-    - This website is written as a single file as a big list
-      - roughly follows syntax follows gemini gemfile format. will probably move further away from it as I go because its mine
+    - => https://tedsummer.com
+    - => gemini://tedsummer.com
+    - This website is written as a single file in a big list. html and gemfiles are generated from this data.
+      - list format roughly follows syntax follows gemini gemfile format. will probably move further away from it as I go because its mine
     - you can view the source code at /source code
       - you can even read the code that reads my code to put it on this site
       - => https://git.sr.ht/~macintoshpie/macintoshpie.srht.site
