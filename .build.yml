@@ -5,7 +5,7 @@ packages:
 - go
 environment:
   site: macintoshpie.srht.site
-  mydomain: tedsummer.com
+  my_domain: www.tedsummer.com
 tasks:
 - package: |
     cd ${site}
@@ -13,5 +13,5 @@ tasks:
     cd ./build
     tar -cvz . > ../../site.tar.gz
 - upload: |
-    hut pages publish -d tedsummer.com -p HTTPS site.tar.gz
-    hut pages publish -d tedsummer.com -p GEMINI site.tar.gz
+    hut pages publish -d ${my_domain} -p HTTPS site.tar.gz
+    hut pages publish -d ${my_domain} -p GEMINI site.tar.gz
