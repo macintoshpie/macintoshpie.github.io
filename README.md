@@ -1,5 +1,6 @@
 - => https://tedsummer.com
 - => gemini://tedsummer.com
+- => https://git.sr.ht/~macintoshpie/macintoshpie.srht.site
 - hosting provided by sourcehut pages
   - see .build.yml
 - dev server

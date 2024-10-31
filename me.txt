@@ -48,7 +48,9 @@ foo = 1 + 2.3
 }
 ```
     - todos
-      - fix text overflow for code. maybe do scrollable on overflow-x
+      - fix text overflow for code in html. maybe do scrollable on overflow-x
+      - generate list data for _all_ go files (currently explicitly listed)
+      - fix list renderer code formatting (adds a lot of whitespace each rerun)
   - tombola: generative music
     - Inspired by Teenage Engineering OP-1's tombola sequencer.
     - => https://tombola.tedsummer.com/
