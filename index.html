@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ted Summer</title>
+    <meta name="description" content="Ted Summer — designer and software engineer based in Atlanta.">
+    <meta property="og:title" content="Ted Summer">
+    <meta property="og:description" content="Designer and software engineer based in Atlanta.">
+    <meta property="og:type" content="website">
+    <style>
+        :root {
+            --text: #222;
+            --bg: #fff;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --text: #e4e4e4;
+                --bg: #1a1a1a;
+            }
+        }
+
+        body {
+            font-family: system-ui, sans-serif;
+            max-width: 480px;
+            margin: 80px auto;
+            padding: 0 20px;
+            line-height: 1.6;
+            color: var(--text);
+            background: var(--bg);
+        }
+
+        a {
+            color: var(--text);
+            text-underline-offset: 3px;
+            text-decoration-thickness: 1px;
+            transition: opacity 0.15s;
+        }
+
+        a:hover {
+            opacity: 0.5;
+        }
+
+        h1 {
+            margin-bottom: 0.25em;
+        }
+
+        .photo {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            margin-bottom: 1em;
+        }
+    </style>
+</head>
+
+<body>
+    <img src="me.jpg" alt="Ted Summer" class="photo">
+    <h1>Ted Summer</h1>
+    <p>
+        <a href="mailto:ted.summer2@gmail.com">Email</a> ·
+        <a href="https://linkedin.com/in/tedsummer">LinkedIn</a> ·
+        <a href="https://github.com/macintoshpie">GitHub</a>
+    </p>
+    <p>I design and build neat things with software.</p>
+    <p>Based in Atlanta. Currently at <a href="https://net.inc">Net</a>. Previously at <a
+            href="https://replit.com">Replit</a> and <a href="https://deptagency.com">DEPT</a>.</p>
+    <p>Co-creator of <a href="https://cabbage.town">cabbage.town</a>, a community radio station.</p>
+</body>
+
+</html>
